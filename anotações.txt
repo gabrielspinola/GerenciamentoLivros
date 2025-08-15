@@ -1,0 +1,31 @@
+Instala a maquina virtual 
+ >> python -m venv .venv
+
+scrapy shell
+ >> fetch('https://lista.mercadolivre.com.br/notebook?sb=rb#D[A:notebook]')
+
+cd .\src\coleta
+
+Roda o scrapy
+ >> scrapy crawl notebook -o ..\..\data\data.json 
+
+Roda o Streamlit
+ >> streamlit run .\src\dashboard\app.py
+
+Ativar ambiente vitual
+ .\venv\Scripts\Activate.ps1 
+
+Gerar requirements.txt
+ >> pip freeze > requirements.txt
+
+Instalar requirements.txt
+ >> pip install -r requirements.txt
+
+-------------------------------------------------
+
+Inciar um projeto scrapy
+ >> scrapy startproject <name>
+
+You can start your first spider with:
+ >> cd coleta
+ >> scrapy genspider <NameExample> <siteExample.com>
