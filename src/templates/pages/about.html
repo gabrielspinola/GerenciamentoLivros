@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}Sobre - Genrenciamento de Livros{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 mx-auto">
+        <h1 class="mb-4">Sobre Nós</h1>
+        <p class="lead">Bem-vindo ao Gerenciamento de Livros, uma aplicação desenvolvida para facilitar o controle e a organização de livros.</p>       
+        
+        <div class='row'>
+            <div class='col-md-6'>
+                <h6><i class='fas fa-recycle text-success me-2'></i>Reutilização</h6>
+                <p class='small'>Componentes podem ser usados em múltiplas páginas</p>
+            </div>
+            <div class='col-md-6'>
+                <h6><i class='fas fa-cogs text-primary me-2'></i>Manutenibilidade</h6>
+                <p class='small'>Mudanças em um local refletem em toda aplicação</p>
+            </div>
+            <div class='col-md-6'>
+                <h6><i class='fas fa-tachometer-alt text-warning me-2'></i>Produtividade</h6>
+                <p class='small'>Desenvolvimento mais rápido e eficiente</p>
+            </div>
+            <div class='col-md-6'>
+                <h6><i class='fas fa-puzzle-piece text-info me-2'></i>Modularidade</h6>
+                <p class='small'>Código organizado e bem estruturado</p>
+            </div>
+        </div>
+    
+    </div>
+</div>
+{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+{% endblock %}

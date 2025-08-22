@@ -1,3 +1,4 @@
+from datetime import datetime
 from mysql.connector import Error
 from model.UsuarioModel import UsuarioModel
 from typing import List, Optional
@@ -10,12 +11,15 @@ class UsuarioServices:
     #Cria um novo registro
     def create(self, usuario: UsuarioModel) -> Optional[UsuarioModel]:
         try:
+            #print(usuario)
+            #print(usuario.nome, usuario.login, usuario.password, usuario.dataAniversario)
             sql = "INSERT INTO usuarios (nome, login, password, dataAniversario) VALUES (%s, %s, %s, %s)"
-            self.db.cursor.execute(sql, (usuario.nome, usuario.login, usuario.password, usuario.dataAniversario))
+            self.db.cursor.execute(sql, (usuario.nome, usuario.login, usuario.password, datetime.strptime(usuario.dataAniversario, '%d/%m/%Y')))
             self.db.connection.commit()
             return (f"Usuário {usuario.nome} criado com sucesso.")
         except Error as e:
             self.db.connection.rollback()
+            print(f"Erro ao salvar usuário: {e}")
             return (f"Erro ao salvar usuário: {e}")
 
     #Lista todos os registros
@@ -55,6 +59,7 @@ class UsuarioServices:
             return (f"Usuário com ID {id} deletado com sucesso.")
         except Error as e:
             self.db.connection.rollback()
+            print (f"Erro ao deletar usuário: {e}")
             return (f"Erro ao deletar usuário: {e}")
             
     #Atualiza dados na tabela
@@ -83,7 +88,9 @@ class UsuarioServices:
             if self.db.cursor.rowcount > 0:
                 return(f"Usuário com ID {usuario.idusuario} atualizado com sucesso.")
             else:
+                print (f"Nenhum usuário encontrado com ID {usuario.idusuario}.")
                 return (f"Nenhum usuário encontrado com ID {usuario.idusuario}.")
         except Error as e:
             self.db.connection.rollback()
+            print (f"Erro ao atualizar usuário: {e}")
             return (f"Erro ao atualizar usuário: {e}")

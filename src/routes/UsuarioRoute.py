@@ -1,6 +1,7 @@
 from conexao import DatabaseConnection
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 from services.UsuarioServices import UsuarioServices
+from model.UsuarioModel import UsuarioModel
 
 
 class UsuarioRoute:
@@ -13,14 +14,11 @@ class UsuarioRoute:
         @self.app.route("/usuarios", methods=["POST"])
         def create_usuario():
             data = request.json
-            nome = data.get("nome")
-            login = data.get("login")
-            password = data.get("password")
-            dataAniversario = data.get("dataAniversario")
+            usuario = UsuarioModel(nome=data.get("nome"), login=data.get("login"), password=data.get("password"), dataAniversario=data.get("dataAniversario"))
 
             self.db.connect()
-            usuario = UsuarioServices(self.db)
-            usuario.create(nome, login, password, dataAniversario)
+            usuario_service = UsuarioServices(self.db)
+            usuario_service.create(usuario)
             self.db.close()
             return jsonify({"message": "Usuário criado com sucesso."}), 201
 
@@ -29,8 +27,9 @@ class UsuarioRoute:
             self.db.connect()
             usuario = UsuarioServices(self.db)
             usuarios = usuario.listar_all()
+            
             self.db.close()
-            return jsonify(usuarios), 200
+            return render_template("ListUsuarios.html", usuarios=usuarios), 200
 
         @self.app.route("/usuarios/<int:id>", methods=["GET"])
         def consultar_usuario(id):

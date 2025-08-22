@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Gerenciamento de Livros{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    {% block head %}{% endblock %}
+</head>
+<body class="class-body">
+    <!-- Incluindo o componente de navegação -->
+    {% include 'components/navbar.html' %}
+    
+    <main class="container mt-4">
+        <!-- Área para mensagens flash -->
+        {% include 'components/flash_messages.html' %}
+        
+        <!-- Conteúdo principal da página -->
+        {% block content %}{% endblock %}
+    </main>
+    
+    <!-- Incluindo o rodapé -->
+    {% include 'components/footer.html' %}
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>
