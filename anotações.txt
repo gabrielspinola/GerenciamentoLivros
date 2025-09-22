@@ -13,7 +13,7 @@ Roda o Streamlit
  >> streamlit run .\src\dashboard\app.py
 
 Ativar ambiente vitual
- .\venv\Scripts\Activate.ps1 
+ .\.venv\Scripts\activate
 
 Gerar requirements.txt
  >> pip freeze > requirements.txt

@@ -31,7 +31,7 @@ class UsuarioServices:
             if result:
                 return [UsuarioModel.from_row(row) for row in result]
             else:
-                return "Nenhum usuário encontrado."
+                return None
         except Error as e:
             print(f"Erro ao listar usuários: {e}")
             return []
@@ -45,7 +45,7 @@ class UsuarioServices:
             if result:
                 return UsuarioModel.from_row(result)
             else:
-                return "Usuário não encontrado."
+                return None
         except Error as e:
             print(f"Erro ao consultar usuário: {e}")
             return []

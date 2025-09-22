@@ -1,26 +1,30 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Usuários</title>
-</head>
-<body>
-    <table>
-        <tr>
-            <th>Nome</th>
-            <th>Login</th>
-            <th>Data de Aniversário</th>
-            <th>Status</th>
-        </tr>
-        {% for usuario in usuarios %}
-        <tr>
-            <td>{{ usuario.nome }}</td>
-            <td>{{ usuario.login }}</td>
-            <td>{{ usuario.dataAniversario }}</td>
-            <td>{{ usuario.status }}</td>
-        </tr>
-        {% endfor %}
+{% extends 'base.html' %}
+
+{% block title %}Lista de Usuários - Gerenciamento de Livros{% endblock %}
+
+{% block content %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Nome</th>
+                <th scope="col">Login</th>
+                <th scope="col">Data de Aniversário</th>
+                <th scope="col">Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for usuario in usuarios %}
+            <tr>
+                <td>{{ usuario.nome }}</td>
+                <td>{{ usuario.login }}</td>
+                <td>{{ usuario.dataAniversario }}</td>
+                <td>{{ usuario.ativo }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
     </table>
-</body>
-</html>
+{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+{% endblock %}

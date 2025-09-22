@@ -11,18 +11,27 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
-                    <a class="nav-link {% if request.endpoint == '/' %}active{% endif %}" 
+                    <a class="nav-link {% if request.endpoint == 'home' %}active{% endif %}" 
                        href="/">
                         Home
                     </a>
-                </li>
-                <!--
+                </li>                
                 <li class="nav-item">
-                    <a class="nav-link { % if request.endpoint == 'about' % }active { % endif % }" 
-                       href="{ { url_for('about') } }">
+                    <a class="nav-link {% if request.endpoint == 'about' %}active{% endif %}" 
+                       href="/about">
                         Sobre
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if request.endpoint == 'listar_usuarios' %}active{% endif %}" 
+                       href="/usuarios">
+                        Lista de Usuários
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/logout">Sair</a>
+                </li>
+                <!--
                 <li class="nav-item">
                     <a class="nav-link { % if request.endpoint == 'contact' % }active{ % endif % }" 
                        href="{ { url_for('contact') } }">

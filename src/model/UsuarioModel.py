@@ -27,5 +27,5 @@ class UsuarioModel:
             login=row[2],
             password=row[3],
             dataAniversario=row[4].strftime("%d/%m/%Y") if row[4] else None,
-            ativo= "ATIVO" if row[5]=="A" else "INATIVO"
+            ativo= "ATIVO" if row[5]=='A' else "INATIVO"
         )
