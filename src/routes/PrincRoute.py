@@ -24,14 +24,14 @@ class PrincRoute:
 
         @self.app.route('/')
         def inicio():
-            if 'username' in session:                
+            if 'username' in session:
                 return redirect("/home")
             return redirect("/login")
 
         
         @self.app.route("/home", methods=["GET"])
         @login_required
-        def home():            
+        def home():
             template_dir = os.path.join(self.app.root_path, 'templates')
             return render_template("pages/home.html", template_dir=template_dir), 200
         

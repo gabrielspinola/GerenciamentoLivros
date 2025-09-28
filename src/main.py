@@ -4,7 +4,7 @@ from routes.PrincRoute import PrincRoute
 
 app = Flask(__name__)
 app.secret_key = 'sua_chave_secreta_aqui_mude_em_producao'
-app.permanent_session_lifetime = 120  # Sessão expira após 2 minutos de inatividade
+app.permanent_session_lifetime = 600  # Sessão expira após 10 minutos de inatividade
 
 if __name__ == "__main__":
     principal = PrincRoute(app)

@@ -3,6 +3,9 @@
 {% block title %}Lista de Usuários - Gerenciamento de Livros{% endblock %}
 
 {% block content %}
+    <div class="cotauner mt-4 d-flex justify-content-end">
+        <a class="btn btn-primary " href="/usuario" role="button">Novo</a>
+    </div>
     <table class="table">
         <thead>
             <tr>
@@ -10,6 +13,7 @@
                 <th scope="col">Login</th>
                 <th scope="col">Data de Aniversário</th>
                 <th scope="col">Status</th>
+                <th scope="col"></th>
             </tr>
         </thead>
         <tbody>
@@ -19,6 +23,10 @@
                 <td>{{ usuario.login }}</td>
                 <td>{{ usuario.dataAniversario }}</td>
                 <td>{{ usuario.ativo }}</td>
+                <td class="text-end">
+                    <a href="/usuario/{{ usuario.idusuario }}/editar"  class="btn btn-sm btn-warning">Editar</a>
+                    <a href="/usuario/{{ usuario.idusuario }}/deletar" class="btn btn-sm btn-danger">Excluir</a>
+                </td>
             </tr>
             {% endfor %}
         </tbody>

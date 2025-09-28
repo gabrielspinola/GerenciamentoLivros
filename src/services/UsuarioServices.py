@@ -6,15 +6,20 @@ from typing import List, Optional
 
 class UsuarioServices:
     def __init__(self, db_connection):
-        self.db = db_connection        
+        self.db = db_connection
 
     #Cria um novo registro
     def create(self, usuario: UsuarioModel) -> Optional[UsuarioModel]:
         try:
-            #print(usuario)
-            #print(usuario.nome, usuario.login, usuario.password, usuario.dataAniversario)
-            sql = "INSERT INTO usuarios (nome, login, password, dataAniversario) VALUES (%s, %s, %s, %s)"
-            self.db.cursor.execute(sql, (usuario.nome, usuario.login, usuario.password, datetime.strptime(usuario.dataAniversario, '%d/%m/%Y')))
+            if usuario.dataAniversario != '':
+                sql = "INSERT INTO usuarios (nome, login, password, dataAniversario) VALUES (%s, %s, %s, %s)"
+                #data_obj = datetime.strptime(usuario.dataAniversario, '%Y-%m-%d')
+                #usuario.dataAniversario = data_obj.strftime('%d/%m/%Y')
+            
+                self.db.cursor.execute(sql, (usuario.nome, usuario.login, usuario.password, usuario.dataAniversario))
+            else:
+                self.db.cursor.execute("INSERT INTO usuarios (nome, login, password) VALUES (%s, %s, %s)", (usuario.nome, usuario.login, usuario.password))
+                
             self.db.connection.commit()
             return (f"Usuário {usuario.nome} criado com sucesso.")
         except Error as e:
@@ -35,7 +40,21 @@ class UsuarioServices:
         except Error as e:
             print(f"Erro ao listar usuários: {e}")
             return []
-    
+        
+    #Lista por ID
+    def consultar_id(self, id) -> Optional[UsuarioModel]:
+        try:
+            sql = "SELECT * FROM usuarios WHERE idusuario = %s"
+            self.db.cursor.execute(sql, (id,))
+            result = self.db.cursor.fetchone()
+            if result:
+                return UsuarioModel.from_row(result)
+            else:
+                return None
+        except Error as e:
+            print(f"Erro ao consultar usuário: {e}")
+            return []
+        
     #Consulta por Login
     def consultar_login(self, login) -> Optional[UsuarioModel]:
         try:

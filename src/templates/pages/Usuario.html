@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}Usuário - Gerenciamento de Livros{% endblock %}
+
+{% block content %}
+<div class="cotauner mt-4 d-flex">
+    {% if acao == "novo" %} 
+     <form class="row g-3" method="POST" action="/usuarios">
+    {% else %} 
+     <form class="row g-3" method="POST" action="/usuario/{{ usuario.idusuario }}">
+    {% endif %}
+        <div class="col-md-6">
+            <label for="nome" class="form-label">Nome</label>
+            <input type="text" class="form-control" id="nome" name="nome" value="{{ usuario.nome }}" required>
+        </div>
+        <div class="col-md-6">
+            <label for="login" class="form-label">Login</label>
+            <input type="text" class="form-control" id="login" name="login" value="{{ usuario.login }}" required>
+        </div>
+        <div class="col-md-6">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" class="form-control" id="password" name="password" required>
+        </div>
+        <div class="col-md-6">
+            <label for="dataAniversario" class="form-label">Aniversário</label>
+            <input type="date" class="form-control" id="dataAniversario" name="dataAniversario" value="{{ usuario.dataAniversario }}">
+        </div>
+        <div class="col-12 ">
+            <button type="submit" class="btn btn-primary">Salvar</button>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+{% endblock %}
