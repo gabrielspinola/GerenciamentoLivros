@@ -1,42 +1,31 @@
 import os
 from conexao import DatabaseConnection
-from flask import Flask, request, render_template, flash, redirect, session 
+from flask import request, render_template, flash, redirect, session 
 from werkzeug.security import check_password_hash
-from functools import wraps
+from routes.Routes import Routes
 from services.UsuarioServices import UsuarioServices
 
-class PrincRoute:
+class PrincRoute(Routes):
     def __init__(self, app):
         self.app = app
         self.db = DatabaseConnection()
         self.register_routes()    
 
     def register_routes(self):
-        # Decorator para rotas que precisam de autenticação
-        def login_required(f):
-            @wraps(f)
-            def decorated_function(*args, **kwargs):
-                if 'username' not in session:
-                    flash('Você precisa fazer login primeiro!', 'warning')
-                    return redirect("/login")
-                return f(*args, **kwargs)
-            return decorated_function
-
         @self.app.route('/')
         def inicio():
             if 'username' in session:
                 return redirect("/home")
             return redirect("/login")
 
-        
         @self.app.route("/home", methods=["GET"])
-        @login_required
+        @Routes.login_required
         def home():
             template_dir = os.path.join(self.app.root_path, 'templates')
             return render_template("pages/home.html", template_dir=template_dir), 200
         
         @self.app.route("/about", methods=["GET"])
-        @login_required
+        @Routes.login_required
         def about():
             template_dir = os.path.join(self.app.root_path, 'templates')
             return render_template("pages/about.html", template_dir=template_dir), 200

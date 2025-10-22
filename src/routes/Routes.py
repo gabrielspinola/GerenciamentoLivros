@@ -5,6 +5,7 @@ class Routes:
     def __init__(self):
         pass
 
+    # Decorator para rotas que precisam de autenticação
     @staticmethod
     def login_required(f):
         @wraps(f)
