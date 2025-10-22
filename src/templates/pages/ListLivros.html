@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %}Lista de Livros - Gerenciamento de Livros{% endblock %}
+
+{% block content %}
+    <div class="container mt-4 d-flex justify-content-end">
+        <a class="btn btn-primary " href="/livro" role="button">Novo</a>
+    </div>
+    {% if livros != none %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Título</th>
+                    <th scope="col">Autor</th>
+                    <th scope="col">Ano de Publicação</th>
+                    <th scope="col">Gênero</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for livro in livros %}
+                    <tr>
+                        <td>{{ livro.titulo }}</td>
+                        <td>{{ livro.autor }}</td>
+                        <td>{{ livro.ano_publicacao }}</td>
+                        <td>{{ livro.genero }}</td>
+                        <td class="text-end">
+                            <a href="/livro/{{ livro.idlivro }}/editar"  class="btn btn-sm btn-warning">Editar</a>
+                            <a href="/livro/{{ livro.idlivro }}/deletar" class="btn btn-sm btn-danger">Excluir</a>
+                    </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <div class="container mt-4 d-flex justify-content-center">
+            <table class="table">
+                <tr>
+                    <td colspan="4"><b>Nenhum livro encontrado.</b></td>
+                </tr>
+            </table>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+{% endblock %}

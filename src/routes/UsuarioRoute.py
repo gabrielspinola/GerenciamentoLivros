@@ -1,30 +1,19 @@
 from conexao import DatabaseConnection
-from flask import Flask, request, jsonify, render_template, flash, url_for, redirect, session
-from functools import wraps
+from flask import request, render_template, flash, redirect
+from routes.Routes import Routes
 from werkzeug.security import generate_password_hash
 from services.UsuarioServices import UsuarioServices
 from model.UsuarioModel import UsuarioModel
 
-
-class UsuarioRoute:
+class UsuarioRoute(Routes):
     def __init__(self, app):
         self.app = app
         self.db = DatabaseConnection()
         self.register_routes()
 
     def register_routes(self):
-        def login_required(f):
-            @wraps(f)
-            def decorated_function(*args, **kwargs):
-                if 'username' not in session:
-                    flash('Você precisa fazer login primeiro!', 'warning')
-                    return redirect(url_for('login'))
-                return f(*args, **kwargs)
-            return decorated_function
-        
-        
         @self.app.route("/usuarios", methods=["POST"])
-        @login_required
+        @Routes.login_required
         def create_usuario():
             usuario = UsuarioModel(nome = request.form.get("nome"), 
                                    login = request.form.get("login"), 
@@ -38,7 +27,7 @@ class UsuarioRoute:
             return redirect('/usuarios')
 
         @self.app.route("/usuarios", methods=["GET"])
-        @login_required
+        @Routes.login_required
         def listar_usuarios():
             self.db.connect()
             usuario = UsuarioServices(self.db)
@@ -48,13 +37,13 @@ class UsuarioRoute:
             return render_template("pages/ListUsuarios.html", usuarios=usuarios), 200
         
         @self.app.route("/usuario", methods=["GET"])
-        @login_required
+        @Routes.login_required
         def usuario():
             usuario_data = UsuarioModel(idusuario=0, nome="", login="", password="", dataAniversario="", ativo=1)
             return render_template("pages/Usuario.html", usuario=usuario_data, acao="novo"), 200
 
         @self.app.route("/usuario/<int:id>/editar", methods=["GET"])
-        @login_required
+        @Routes.login_required
         def consultar_usuario(id):
             self.db.connect()
             usuario = UsuarioServices(self.db)
@@ -64,7 +53,7 @@ class UsuarioRoute:
         
 
         @self.app.route("/usuario/<int:id>", methods=["POST", "GET"])
-        @login_required
+        @Routes.login_required
         def atualizar_usuario(id):
             altUsuario = UsuarioModel(idusuario = id,
                                    nome = request.form.get("nome"), 
@@ -80,7 +69,7 @@ class UsuarioRoute:
             return redirect('/usuarios')
 
         @self.app.route("/usuario/<int:id>/deletar", methods=["DELETE", "GET"])
-        @login_required
+        @Routes.login_required
         def deletar_usuario(id):
             self.db.connect()
             usuario = UsuarioServices(self.db)

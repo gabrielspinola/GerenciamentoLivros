@@ -1,5 +1,4 @@
 from dataclasses import dataclass, asdict
-#from datetime import datetime
 from typing import Optional
 
 @dataclass
@@ -10,6 +9,7 @@ class UsuarioModel:
     password: str = ""
     dataAniversario: str = ""
     ativo: str = ""
+    dataAniversario_raw: str = ""
 
     def to_dict(self) -> dict:
         # Converte para dicionário
@@ -27,5 +27,6 @@ class UsuarioModel:
             login=row[2],
             password=row[3],
             dataAniversario=row[4].strftime("%d/%m/%Y") if row[4] else '',
+            dataAniversario_raw=row[4],
             ativo= "ATIVO" if row[5]=='A' else "INATIVO"
         )
