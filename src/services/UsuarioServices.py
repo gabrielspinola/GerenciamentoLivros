@@ -41,6 +41,20 @@ class UsuarioServices:
             print(f"Erro ao listar usuários: {e}")
             return []
         
+    #Lista todos os registros
+    def listar_allAtivos(self) -> List[UsuarioModel]:
+        try:
+            sql = "SELECT * FROM usuarios WHERE ativo = 'A'"
+            self.db.cursor.execute(sql)
+            result = self.db.cursor.fetchall()
+            if result:
+                return [UsuarioModel.from_row(row) for row in result]
+            else:
+                return None
+        except Error as e:
+            print(f"Erro ao listar usuários: {e}")
+            return []
+        
     #Lista por ID
     def consultar_id(self, id) -> Optional[UsuarioModel]:
         try:

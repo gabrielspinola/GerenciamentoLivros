@@ -11,28 +11,24 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
-                    <a class="nav-link {% if request.endpoint == 'home' %}active{% endif %}" 
-                       href="/">
-                        Home
-                    </a>
-                </li>                
-                <li class="nav-item">
-                    <a class="nav-link {% if request.endpoint == 'about' %}active{% endif %}" 
-                       href="/about">
-                        Sobre
-                    </a>
+                    <a class="nav-link {% if request.endpoint == 'home' %}active{% endif %}" href="/">Home</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link {% if request.endpoint == 'listar_usuarios' %}active{% endif %}" 
-                       href="/usuarios">
-                        Lista de usuários
-                    </a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarCadastro" role="button" data-bs-toggle="dropdown" aria-expanded="false">Cadastros</a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarCadastro">
+                        <li><a class="dropdown-item {% if request.endpoint == 'listar_usuarios' %}active{% endif %}" href="/usuarios">Usuários</a></li>
+                        <li><a class="dropdown-item {% if request.endpoint == 'listar_livros' %}active{% endif %}" href="/livros">Livros</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                    </ul>
                 </li>
+               <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarLivros" role="button" data-bs-toggle="dropdown" aria-expanded="false">Livros</a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarLivros">
+                        <li><a class="dropdown-item {% if request.endpoint == 'listar_livrosAlugados' %}active{% endif %}" href="/livrosAlugados">Alugar</a></li>
+                    </ul>
+               </li>                
                 <li class="nav-item">
-                    <a class="nav-link {% if request.endpoint == 'listar_livros' %}active{% endif %}" 
-                       href="/livros">
-                        Lista de livros
-                    </a>
+                    <a class="nav-link {% if request.endpoint == 'about' %}active{% endif %}" href="/about">Sobre</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/logout">Sair</a>

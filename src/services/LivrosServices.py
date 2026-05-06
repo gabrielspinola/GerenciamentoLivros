@@ -48,6 +48,22 @@ class LivroServices:
             print(f"Erro ao consultar livro: {e}")
             return []
     
+    #Listar livros disponíveis para aluguel
+    def listar_livros_disponiveis(self) -> List[LivroModel]:
+        try:
+            sql = """SELECT * FROM livros
+                     WHERE bloqueado = 'N'"""
+            self.db.cursor.execute(sql)
+            result = self.db.cursor.fetchall()
+            
+            if result:
+                return [LivroModel.from_row(row) for row in result]
+            else:
+                return None
+        except Error as e:
+            print(f"Erro ao listar livros disponíveis: {e}")
+            return []
+        
     #Deletar por ID
     def deletar(self, id):
         try:
@@ -60,6 +76,30 @@ class LivroServices:
             print (f"Erro ao deletar livro: {e}")
             return (f"Erro ao deletar livro: {e}")
         
+    #Bloquear por ID
+    def BloqueiaLivroID(self, id):
+        try:
+            sql = "UPDATE livros SET bloqueado = 'S' WHERE idlivro = %s"
+            self.db.cursor.execute(sql, (id,))
+            self.db.connection.commit()
+            return (f"Livro com ID {id} bloqueado com sucesso.")
+        except Error as e:
+            self.db.connection.rollback()
+            print (f"Erro ao bloquear livro: {e}")
+            return (f"Erro ao bloquear livro: {e}")
+        
+    #Desbloquear por ID
+    def DesbloqueiaLivroID(self, id):
+        try:
+            sql = "UPDATE livros SET bloqueado = 'N' WHERE idlivro = %s"
+            self.db.cursor.execute(sql, (id,))
+            self.db.connection.commit()
+            return (f"Livro com ID {id} desbloqueado com sucesso.")
+        except Error as e:
+            self.db.connection.rollback()
+            print (f"Erro ao desbloquear livro: {e}")
+            return (f"Erro ao desbloquear livro: {e}")
+
     #Atualiza dados na tabela
     def atualizar(self, livro: LivroModel) -> Optional[LivroModel]:
         try:
@@ -78,6 +118,9 @@ class LivroServices:
             if livro.genero:
                 fields.append("genero = %s")
                 values.append(livro.genero)
+            if livro.bloqueado:
+                fields.append("bloqueado = %s")
+                values.append(livro.bloqueado)
             values.append(livro.idlivro)
 
             sql += ", ".join(fields) + " WHERE idlivro = %s"

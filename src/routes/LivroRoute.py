@@ -18,7 +18,8 @@ class LivroRoute(Routes):
             livro = LivroModel(titulo = request.form.get("titulo"), 
                                autor = request.form.get("autor"), 
                                ano_publicacao = request.form.get("ano_publicacao"), 
-                               genero = request.form.get("genero"))
+                               genero = request.form.get("genero"),
+                               bloqueado = request.form.get("bloqueado"))
             self.db.connect()
             livro_service = LivroServices(self.db)
             livro_service.create(livro)
@@ -39,12 +40,12 @@ class LivroRoute(Routes):
         @self.app.route("/livro", methods=["GET"])
         @Routes.login_required
         def livro():
-            livro_data = LivroModel(idlivro=0, titulo="", autor="", ano_publicacao="", genero="")
+            livro_data = LivroModel(idlivro=0, titulo="", autor="", ano_publicacao="", genero="", bloqueado="N")
             return render_template("pages/Livro.html", livro=livro_data, acao="novo"), 200
 
         @self.app.route("/livro/<int:id>/editar", methods=["GET"])
         @Routes.login_required
-        def consultar_livro(id):
+        def atualizar_livro(id):
             self.db.connect()
             livro_service = LivroServices(self.db)
             livro_data = livro_service.consultar_id(id)
@@ -53,12 +54,13 @@ class LivroRoute(Routes):
 
         @self.app.route("/livro/<int:id>", methods=["POST", "GET"])
         @Routes.login_required
-        def atualizar_livro(id):
+        def consultar_livro(id):
             altLivro = LivroModel(idlivro = id,
                                    titulo = request.form.get("titulo"), 
                                    autor = request.form.get("autor"), 
                                    ano_publicacao = request.form.get("ano_publicacao"), 
-                                   genero = request.form.get("genero"))
+                                   genero = request.form.get("genero"),
+                                   bloqueado = request.form.get("bloqueado"))
 
             self.db.connect()
             livro_service = LivroServices(self.db)

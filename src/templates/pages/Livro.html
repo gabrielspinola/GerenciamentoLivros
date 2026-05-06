@@ -24,6 +24,13 @@
         <div class="col-md-6">
             <label for="genero" class="form-label">Gênero</label>
             <input type="text" class="form-control" id="genero" name="genero" value="{{ livro.genero }}" required>
+        </div>        
+        <div class="col-md-6">
+            <label for="bloqueado" class="form-label">Bloqueado</label>
+            <select class="form-select" id="bloqueado" name="bloqueado" required>
+                <option value="N" {% if livro.bloqueado == "N" %}selected{% endif %}>Não</option>
+                <option value="S" {% if livro.bloqueado == "S" %}selected{% endif %}>Sim</option>
+            </select>
         </div>
         <div class="col-12 ">
             <button type="submit" class="btn btn-primary">Salvar</button>

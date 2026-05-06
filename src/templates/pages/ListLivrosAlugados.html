@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %}Livros Alugados - Gerenciamento de Livros{% endblock %}
+
+{% block content %}
+    <div class="container mt-4 d-flex justify-content-end">
+        <a class="btn btn-primary" href="/alugarLivro" role="button">Novo</a>
+    </div>
+    {% if livrosAlugados != none %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Título</th>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Data Aluguel</th>
+                    <th scope="col">Previsão Entrega</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for livroAlugado in livrosAlugados %}
+                    <tr>
+                        <td>{{ livroAlugado.titulo }}</td>
+                        <td>{{ livroAlugado.nome }}</td>
+                        <td>{{ livroAlugado.dataAluguel }}</td>
+                        <td>{{ livroAlugado.dataEntrega }}</td>
+                        <td class="text-end">
+                            <a href="/livrosAlugado/{{ livroAlugado.idLivrosAlugados }}/editar"  class="btn btn-sm btn-warning">Editar</a>
+                            <a href="/livrosAlugado/{{ livroAlugado.idLivrosAlugados }}/deletar" class="btn btn-sm btn-danger">Excluir</a>
+                    </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <div class="container mt-4 d-flex justify-content-center">
+            <table class="table">
+                <tr>
+                    <td colspan="4"><b>Nenhum aluguel encontrado.</b></td>
+                </tr>
+            </table>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+{% endblock %}

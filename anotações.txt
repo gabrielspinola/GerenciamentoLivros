@@ -1,5 +1,19 @@
+ === AMBIENTE VIRTUAL ===
+-------------------------------------------------
+
 Instala a maquina virtual 
  >> python -m venv .venv
+
+Ativar ambiente vitual
+ .\.venv\Scripts\activate
+
+Gerar requirements.txt
+ >> pip freeze > requirements.txt
+
+Instalar requirements.txt
+ >> pip install -r requirements.txt
+
+-------------------------------------------------
 
 scrapy shell
  >> fetch('https://lista.mercadolivre.com.br/notebook?sb=rb#D[A:notebook]')
@@ -12,16 +26,7 @@ Roda o scrapy
 Roda o Streamlit
  >> streamlit run .\src\dashboard\app.py
 
-Ativar ambiente vitual
- .\.venv\Scripts\activate
-
-Gerar requirements.txt
- >> pip freeze > requirements.txt
-
-Instalar requirements.txt
- >> pip install -r requirements.txt
-
--------------------------------------------------
+-----------------------------------------------------------------
 
 Inciar um projeto scrapy
  >> scrapy startproject <name>

@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}Usuário - Gerenciamento de Livros{% endblock %}
+
+{% block content %}
+<div class="container mt-4 d-flex">
+    {% if acao == "novo" %} 
+     <form class="row g-3" method="POST" action="/livros">
+    {% else %} 
+     <form class="row g-3" method="POST" action="/livro/{{ livroAlugado.idLivrosAlugados }}">
+    {% endif %}
+        <div class="col-md-6">
+            <label for="titulo" class="form-label">Usuário</label>
+            <select class="form-select" id="idusuario" name="idusuario" required>
+                <option value="0" {% if livroAlugado.idusuario == 0 %}selected{% endif %}> -- Selecione um usuário --</option>
+                {% for usuario in usuarios %}
+                <option value="{{ usuario.idusuario }}" {% if usuario.idusuario == livroAlugado.idusuario %}selected{% endif %}>
+                    {{ usuario.nome }}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-6">
+            <label for="titulo" class="form-label">Titulo</label>
+            <select class="form-select" id="idlivro" name="idlivro" required>
+                <option value="0" {% if livroAlugado.idlivro == 0 %}selected{% endif %}> -- Selecione um livro --</option>
+                {% for livroDisponivel in livrosDisponiveis %}
+                <option value="{{ livroDisponivel.idlivro }}" {% if livroDisponivel.idlivro == livroAlugado.idlivro %}selected{% endif %}>
+                    {{ livroDisponivel.titulo }}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-6">
+            <label for="ano_publicacao" class="form-label">Ano de Publicação</label>
+            <input type="number" class="form-control" id="ano_publicacao" name="ano_publicacao" value="{{  }}" required>
+        </div>
+        <div class="col-md-6">
+            <label for="genero" class="form-label">Gênero</label>
+            <input type="text" class="form-control" id="genero" name="genero" value="{{  }}" required>
+        </div>
+        <div class="col-12 ">
+            <button type="submit" class="btn btn-primary">Salvar</button>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+{% endblock %}

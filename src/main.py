@@ -1,4 +1,5 @@
 from flask import Flask, request, redirect
+from routes.LivrosAlugadosRoute import LivrosAlugadosRoute
 from routes.UsuarioRoute import UsuarioRoute
 from routes.LivroRoute import LivroRoute
 from routes.PrincRoute import PrincRoute
@@ -11,5 +12,6 @@ if __name__ == "__main__":
     principal = PrincRoute(app)
     user = UsuarioRoute(app)
     livro = LivroRoute(app)
+    livroAlugado = LivrosAlugadosRoute(app)
     app.run(host="localhost",port=8080,debug=True) #(host="0.0.0.0", port=5000, debug=True)
 

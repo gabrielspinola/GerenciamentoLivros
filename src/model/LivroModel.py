@@ -8,6 +8,7 @@ class LivroModel:
     autor: str = ""
     ano_publicacao: int = 0
     genero: str = ""
+    bloqueado: str = "N"  # "N" para disponível, "S" para bloqueado
 
     def to_dict(self) -> dict:
         # Converte para dicionário
@@ -21,5 +22,6 @@ class LivroModel:
             titulo=row[1],
             autor=row[2],
             ano_publicacao=row[3],
-            genero=row[4]
+            genero=row[4],
+            bloqueado=row[5]
         )
