@@ -3,7 +3,6 @@ from mysql.connector import Error
 from model.UsuarioModel import UsuarioModel
 from typing import List, Optional
 
-
 class UsuarioServices:
     def __init__(self, db_connection):
         self.db = db_connection
@@ -12,13 +11,13 @@ class UsuarioServices:
     def create(self, usuario: UsuarioModel) -> Optional[UsuarioModel]:
         try:
             if usuario.dataAniversario != '':
-                sql = "INSERT INTO usuarios (nome, login, password, dataAniversario) VALUES (%s, %s, %s, %s)"
+                sql = "INSERT INTO usuarios (nome, login, password, dataAniversario, email) VALUES (%s, %s, %s, %s, %s)"
                 #data_obj = datetime.strptime(usuario.dataAniversario, '%Y-%m-%d')
                 #usuario.dataAniversario = data_obj.strftime('%d/%m/%Y')
             
-                self.db.cursor.execute(sql, (usuario.nome, usuario.login, usuario.password, usuario.dataAniversario))
+                self.db.cursor.execute(sql, (usuario.nome, usuario.login, usuario.password, usuario.dataAniversario, usuario.email))
             else:
-                self.db.cursor.execute("INSERT INTO usuarios (nome, login, password) VALUES (%s, %s, %s)", (usuario.nome, usuario.login, usuario.password))
+                self.db.cursor.execute("INSERT INTO usuarios (nome, login, password, email) VALUES (%s, %s, %s, %s)", (usuario.nome, usuario.login, usuario.password, usuario.email))
                 
             self.db.connection.commit()
             return (f"Usuário {usuario.nome} criado com sucesso.")
@@ -113,6 +112,9 @@ class UsuarioServices:
             if usuario.dataAniversario:
                 fields.append("dataAniversario = %s")
                 values.append(usuario.dataAniversario)
+            if usuario.email:
+                fields.append("email = %s")
+                values.append(usuario.email)
             values.append(usuario.idusuario)
 
             sql += ", ".join(fields) + " WHERE idusuario = %s"

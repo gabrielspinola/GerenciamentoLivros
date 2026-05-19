@@ -4,7 +4,7 @@
 
 {% block content %}
     <div class="container mt-4 d-flex justify-content-end">
-        <a class="btn btn-primary" href="/alugarLivro" role="button">Novo</a>
+        <a class="btn btn-primary" href="/alugarLivro" role="button">Alugar livro</a>
     </div>
     {% if livrosAlugados != none %}
         <table class="table">
@@ -22,11 +22,11 @@
                     <tr>
                         <td>{{ livroAlugado.titulo }}</td>
                         <td>{{ livroAlugado.nome }}</td>
-                        <td>{{ livroAlugado.dataAluguel }}</td>
-                        <td>{{ livroAlugado.dataEntrega }}</td>
+                        <td>{{ livroAlugado.dataAluguel_raw }}</td>
+                        <td>{{ livroAlugado.dataDevolucao_raw }}</td>
                         <td class="text-end">
-                            <a href="/livrosAlugado/{{ livroAlugado.idLivrosAlugados }}/editar"  class="btn btn-sm btn-warning">Editar</a>
-                            <a href="/livrosAlugado/{{ livroAlugado.idLivrosAlugados }}/deletar" class="btn btn-sm btn-danger">Excluir</a>
+                            <a href="/livroAlugado/{{ livroAlugado.idLivrosAlugados }}/editar"  class="btn btn-sm btn-warning">Editar</a>
+                            <a href="/livroAlugado/{{ livroAlugado.idLivrosAlugados }}/deletar" class="btn btn-sm btn-danger">Excluir</a>
                     </td>
                     </tr>
                 {% endfor %}

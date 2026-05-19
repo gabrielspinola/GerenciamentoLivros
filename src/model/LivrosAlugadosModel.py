@@ -11,10 +11,20 @@ class LivrosAlugadosModel:
     dataAluguel: str = ""
     dataDevolucao: str = ""
     dataEntrega: str = ""
+    dataAluguel_raw: str = ""
+    dataDevolucao_raw: str = ""
+    dataEntrega_raw: str = ""
 
     def to_dict(self) -> dict:
         # Converte para dicionário
-        return asdict(self)
+        data = asdict(self)
+        if self.dataAluguel:
+            data['dataAluguel'] = self.dataAluguel.isoformat()
+        if self.dataDevolucao:
+            data['dataDevolucao'] = self.dataDevolucao.isoformat()
+        if self.dataEntrega:
+            data['dataEntrega'] = self.dataEntrega.isoformat()
+        return data        
 
     @classmethod
     def from_row(cls, row: tuple) -> 'LivrosAlugadosModel':
@@ -25,7 +35,10 @@ class LivrosAlugadosModel:
             nome=row[2],
             idlivro=row[3],
             titulo=row[4],
-            dataAluguel=row[5].strftime("%d/%m/%Y") if row[5] else '',
-            dataDevolucao=row[6].strftime("%d/%m/%Y") if row[6] else '',
-            dataEntrega=row[7].strftime("%d/%m/%Y") if row[7] else "",
+            dataAluguel_raw=row[5].strftime("%d/%m/%Y") if row[5] else '',
+            dataDevolucao_raw=row[6].strftime("%d/%m/%Y") if row[6] else '',
+            dataEntrega_raw=row[7].strftime("%d/%m/%Y") if row[7] else "",
+            dataAluguel=row[5],
+            dataDevolucao=row[6],
+            dataEntrega=row[7],
         )

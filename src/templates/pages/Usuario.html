@@ -25,6 +25,10 @@
             <label for="dataAniversario" class="form-label">Aniversário</label>
             <input type="date" class="form-control" id="dataAniversario" name="dataAniversario" value="{{ usuario.dataAniversario_raw }}">
         </div>
+        <div class="col-md-6">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="email" name="email" value="{{ usuario.email }}">
+        </div>
         <div class="col-12 ">
             <button type="submit" class="btn btn-primary">Salvar</button>
         </div>

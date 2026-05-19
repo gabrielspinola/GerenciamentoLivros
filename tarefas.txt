@@ -24,21 +24,26 @@
 - Criar funcionalidade para realizar o aluguel de um livro <----------
     - Criar tabela no banco - OK
     - Criar model - Ok
-    - Criar rotas
+    - Criar rotas - OK
     - Criar services - Ok
     - Criar tela de lista - Ok
-    - Criar tela de aluguel - 
-    - Alugar um livro disponível 
+    - Criar tela de aluguel - OK 
+    - Alugar um livro disponível - OK
+    - Editar um livro alugado (Renova a data do livro alugado) -  OK
+    - Excluir o aluguel - OK
 
 - Criar funcionalidade para realizar a devolução do livro
     - Devolver um livro Alugado 
 
 - Criar tela de configuração
     - Criar tabela no banco - OK
-    - Criar model
+    - Criar model - OK
     - Criar rotas
-    - Criar services - 
+    - Criar services - OK 
     - Criar tela sempre terá apenas 1 registro na tabela. 
+
+- Criar botão "Criar conta"
+  - Confirmação de e-mail
 
 - Criar tipos de acesso para os usuários
 
@@ -53,5 +58,6 @@
 - Ajustar cadastro de livros para adicionar uma imagem do livro
 
 - Ajustar menu dropdown - OK
+- Melhorar a mensagens do flash_messages - OK
 
 - Pesquisar sobre blueprint Flask - Implementar

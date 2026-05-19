@@ -18,7 +18,8 @@ class UsuarioRoute(Routes):
             usuario = UsuarioModel(nome = request.form.get("nome"), 
                                    login = request.form.get("login"), 
                                    password = generate_password_hash(request.form.get("password")), 
-                                   dataAniversario = request.form.get("dataAniversario"))
+                                   dataAniversario = request.form.get("dataAniversario"),
+                                   email = request.form.get("email"))
             self.db.connect()
             usuario_service = UsuarioServices(self.db)
             usuario_service.create(usuario)
@@ -39,7 +40,7 @@ class UsuarioRoute(Routes):
         @self.app.route("/usuario", methods=["GET"])
         @Routes.login_required
         def usuario():
-            usuario_data = UsuarioModel(idusuario=0, nome="", login="", password="", dataAniversario="", ativo=1)
+            usuario_data = UsuarioModel(idusuario=0, nome="", login="", password="", dataAniversario="", ativo=1, email="")
             return render_template("pages/Usuario.html", usuario=usuario_data, acao="novo"), 200
 
         @self.app.route("/usuario/<int:id>/editar", methods=["GET"])
@@ -59,7 +60,8 @@ class UsuarioRoute(Routes):
                                    nome = request.form.get("nome"), 
                                    login = request.form.get("login"), 
                                    password = generate_password_hash(request.form.get("password")), 
-                                   dataAniversario = request.form.get("dataAniversario"))
+                                   dataAniversario = request.form.get("dataAniversario"),
+                                   email = request.form.get("email"))
 
             self.db.connect()
             usuario = UsuarioServices(self.db)

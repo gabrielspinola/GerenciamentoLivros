@@ -28,6 +28,7 @@ CREATE TABLE IF NOT EXISTS `bd_sgl`.`usuarios` (
   `password` VARCHAR(200) NULL DEFAULT NULL COMMENT 'Senha do usuário no sistema',
   `dataAniversario` DATE NULL DEFAULT NULL COMMENT 'Data do aniversário do usuário',
   `ativo` CHAR(1) NULL DEFAULT 'A' COMMENT 'A - Ativo\\\\n I - Inativado',
+  `email` varchar(80) NOT NULL COMMENT 'Campo de e-mail do usuário',
   PRIMARY KEY (`idusuario`),
   INDEX `USU_SQ1` (`login` ASC) VISIBLE)
 ENGINE = InnoDB

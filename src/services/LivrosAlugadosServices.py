@@ -10,8 +10,8 @@ class LivrosAlugadosServices:
     #Cria um novo registro
     def create(self, aluguel: LivrosAlugadosModel) -> Optional[LivrosAlugadosModel]:
         try:
-            sql = "INSERT INTO livrosalugados (idusuario, idlivro, dataAluguel, dataDevolucao, dataEntrega) VALUES (%s, %s, %s, %s, %s)"
-            self.db.cursor.execute(sql, (aluguel.idusuario, aluguel.idlivro, aluguel.dataAluguel, aluguel.dataDevolucao, aluguel.dataEntrega))
+            sql = "INSERT INTO livrosalugados (idusuario, idlivro, dataAluguel, dataDevolucao) VALUES (%s, %s, %s, %s)"
+            self.db.cursor.execute(sql, (aluguel.idusuario, aluguel.idlivro, aluguel.dataAluguel, aluguel.dataDevolucao))
 
             self.db.connection.commit()
             return (f"Aluguel do livro com ID {aluguel.idlivro} criado com sucesso.")
@@ -20,7 +20,7 @@ class LivrosAlugadosServices:
             print(f"Erro ao salvar aluguel: {e}")
             return (f"Erro ao salvar aluguel: {e}")
         
-    #Lista todos os registros
+    #Lista todos os livros
     def listar_all(self) -> List[LivrosAlugadosModel]:
         try:
             sql = """SELECT la.idLivrosAlugados, la.idusuario, usu.nome, la.idlivro, lv.titulo, la.dataAluguel, la.dataDevolucao, la.dataEntrega
@@ -33,9 +33,26 @@ class LivrosAlugadosServices:
             else:
                 return None
         except Error as e:
-            print(f"Erro ao listar livros alugados: {e}")
+            print(f"Erro ao listar todos os livros: {e}")
             return []
-        
+    
+    #Lista todos os livros não entregues
+    def listar_all_nao_entregues(self) -> List[LivrosAlugadosModel]:
+        try:
+            sql = """SELECT la.idLivrosAlugados, la.idusuario, usu.nome, la.idlivro, lv.titulo, la.dataAluguel, la.dataDevolucao, la.dataEntrega
+                       FROM bd_sgl.livrosalugados la, bd_sgl.usuarios usu, bd_sgl.livros lv
+                      WHERE la.idusuario = usu.idusuario and la.idlivro   = lv.idlivro
+                        AND la.dataEntrega IS NULL"""
+            self.db.cursor.execute(sql)
+            result = self.db.cursor.fetchall()
+            if result:
+                return [LivrosAlugadosModel.from_row(row) for row in result]
+            else:
+                return None
+        except Error as e:
+            print(f"Erro ao listar livros não entregues: {e}")
+            return []    
+    
     #Lista por ID
     def consultar_id(self, id) -> Optional[LivrosAlugadosModel]:
         try:

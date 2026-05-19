@@ -17,9 +17,67 @@
                 <div class="alert alert-{{ alert_type }} alert-dismissible fade show" role="alert">
                     <i class="fas fa-info-circle me-2"></i>
                     {{ message }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    <button type="button" class="btn-close" aria-label="Close"></button>
                 </div>
             {% endfor %}
         </div>
     {% endif %}
 {% endwith %}
+
+<style>
+    .flash-messages {
+        margin-bottom: 1.5rem;
+        position: relative;
+        z-index: 1;
+    }
+    .flash-messages .alert {
+        width: 100%;
+        margin-bottom: 0.75rem;
+        border-radius: 0.5rem;
+        box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.08);
+        transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+    .flash-messages .alert.fade-out {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+</style>
+
+<script>
+    window.addEventListener('DOMContentLoaded', function () {
+        const alerts = document.querySelectorAll('.flash-messages .alert');
+        if (alerts.length === 0) {
+            return;
+        }
+
+        function closeAlert(alertEl) {
+            if (alertEl.classList.contains('fade-out')) {
+                return;
+            }
+            alertEl.classList.add('fade-out');
+            setTimeout(function () {
+                if (window.bootstrap && window.bootstrap.Alert) {
+                    const alertInstance = window.bootstrap.Alert.getOrCreateInstance(alertEl);
+                    alertInstance.close();
+                } else {
+                    alertEl.remove();
+                }
+            }, 400);
+        }
+
+        alerts.forEach(function (alertEl) {
+            const closeButton = alertEl.querySelector('.btn-close');
+            if (closeButton) {
+                closeButton.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    closeAlert(alertEl);
+                });
+            }
+        });
+
+        setTimeout(function () {
+            alerts.forEach(closeAlert);
+        }, 5000);
+    });
+</script>
