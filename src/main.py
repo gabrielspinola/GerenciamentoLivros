@@ -3,6 +3,7 @@ from routes.LivrosAlugadosRoute import LivrosAlugadosRoute
 from routes.UsuarioRoute import UsuarioRoute
 from routes.LivroRoute import LivroRoute
 from routes.PrincRoute import PrincRoute
+from routes.SettingsRoute import SettingsRoute
 
 app = Flask(__name__)
 app.secret_key = 'sua_chave_secreta_aqui_mude_em_producao'
@@ -13,5 +14,6 @@ if __name__ == "__main__":
     user = UsuarioRoute(app)
     livro = LivroRoute(app)
     livroAlugado = LivrosAlugadosRoute(app)
+    settings = SettingsRoute(app)
     app.run(host="localhost",port=8080,debug=True) #(host="0.0.0.0", port=5000, debug=True)
 

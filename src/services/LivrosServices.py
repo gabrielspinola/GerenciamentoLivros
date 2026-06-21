@@ -39,7 +39,7 @@ class LivroServices:
         try:
             sql = "SELECT * FROM livros WHERE idlivro = %s"
             self.db.cursor.execute(sql, (id,))
-            result = self.db.cursor.fetchone()
+            result = self.db.cursor.fetchall()
             if result:
                 return LivroModel.from_row(result)
             else:

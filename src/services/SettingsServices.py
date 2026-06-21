@@ -20,13 +20,13 @@ class SettingsServices:
             return (f"Erro ao salvar configurações: {e}")
     
     #Listar todas as configurações
-    def listar_all(self) -> List[SettingsModel]:
+    def listar_config(self) -> Optional[SettingsModel]:
         try:
             sql = "SELECT * FROM settings"
             self.db.cursor.execute(sql)
             result = self.db.cursor.fetchall()
             if result:
-                return [SettingsModel.from_row(row) for row in result]
+                return SettingsModel.from_row(result) 
             else:
                 return None
         except Error as e:

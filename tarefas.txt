@@ -21,7 +21,7 @@
     - Colocar herança no LivroRoute  - OK
     - Colocar herança no UsuarioRoute - OK
 
-- Criar funcionalidade para realizar o aluguel de um livro <----------
+- Criar funcionalidade para realizar o aluguel de um livro
     - Criar tabela no banco - OK
     - Criar model - Ok
     - Criar rotas - OK

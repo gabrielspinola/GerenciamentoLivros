@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}Configuração - Gerenciamento de Livros{% endblock %}
+
+{% block content %}
+{{ settings }}
+<div class="cotauner mt-4 d-flex">
+     <form class="row g-3" method="POST" action="/settings">
+        <input type="hidden" name="idsettings" value="{{ settings.idsettings }}">
+        <div class="col-md-6">
+            <label for="diasLivroEmprestado" class="form-label">Dias que o livro pode ser emprestado</label>
+            <input type="text" class="form-control" id="diasLivroEmprestado" name="diasLivroEmprestado" value="{{ settings.diasLivroEmprestado }}" required>
+        </div>
+        <div class="col-12 ">
+            <button type="submit" class="btn btn-primary">Salvar</button>
+        </div>
+    </form>
+{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+{% endblock %}
