@@ -7,7 +7,7 @@
     - Deletar usuário - OK
     - Ajustar formato da data ao Editar um usuário formato correto para ser enviado para o HTML YYYY-MM-DD - OK
 
-- Criar tela de Cadastro de livro - 
+- Criar tela de Cadastro de livro - OK
     - Criar model - OK
     - Criar services - OK
     - Criar tela de lista - OK
@@ -17,11 +17,11 @@
     - Alterar livro - OK
     - Excluir livro - OK
 
-- Criar uma Rota Pai e realizar a herança das rotas
+- Criar uma Rota Pai e realizar a herança das rotas - OK
     - Colocar herança no LivroRoute  - OK
     - Colocar herança no UsuarioRoute - OK
 
-- Criar funcionalidade para realizar o aluguel de um livro
+- Criar funcionalidade para realizar o aluguel de um livro - OK
     - Criar tabela no banco - OK
     - Criar model - Ok
     - Criar rotas - OK
@@ -35,21 +35,23 @@
 - Criar funcionalidade para realizar a devolução do livro
     - Devolver um livro Alugado 
 
-- Criar tela de configuração
+- Criar tela de configuração - OK
     - Criar tabela no banco - OK
     - Criar model - OK
-    - Criar rotas
+    - Criar rotas - OK
     - Criar services - OK 
-    - Criar tela sempre terá apenas 1 registro na tabela. 
+    - Criar tela sempre terá apenas 1 registro na tabela. - OK
 
-- Criar botão "Criar conta"
-  - Confirmação de e-mail
+- Criar botão "Criar conta" - ok
+  - Confirmação de e-mail - ok
+  - Link para ativar a conta - ok
+  - Colocar campo para confirmar a senha e verificar se as senhas digitadas são identicas.
 
-- Criar tipos de acesso para os usuários
+- Criar tipos de acesso para os usuários (permissões)
 
 - Criar tela principal do sistema
     - Melhorar tela principal. Ela está crua
-    - Colocar calendário para devolução de livros
+    - Colocar calendário para mostrar quando os livros serão devolvidos
     
 - Ajustar usuario. Funcionalidade para desativar o usuário
 
@@ -61,3 +63,5 @@
 - Melhorar a mensagens do flash_messages - OK
 
 - Pesquisar sobre blueprint Flask - Implementar
+
+- Ajuste do README para poder colocar o passo a passo para rodar a aplicação. 

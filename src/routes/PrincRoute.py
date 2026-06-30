@@ -43,9 +43,11 @@ class PrincRoute(Routes):
                 
                 self.db.close()
                 
-                # Verificar se o usuário existe e a senha está correta
                 if usu != None:
                     if username == usu.login and check_password_hash(usu.password, password):
+                        if usu.ativo != 'A':
+                            flash('Confirme seu cadastro antes de entrar.', 'warning')
+                            return render_template('pages/login.html')
                         session['username'] = username
                         session['name'] = usu.nome
                         flash(f'Bem-vindo, {usu.nome}!', 'success')

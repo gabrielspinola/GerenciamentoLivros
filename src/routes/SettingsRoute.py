@@ -25,10 +25,10 @@ class SettingsRoute(Routes):
                 settings_service_gravar.create(settings)            
             else:
                 settings_service_atualizar = SettingsServices(self.db)
-                settings_service_atualizar.update(settings)
+                settings_service_atualizar.atualizar(settings)
             
             settings_service_consulta = SettingsServices(self.db)
-            settings_data = settings_service_consulta.listar_all()
+            settings_data = settings_service_consulta.listar_config()
             self.db.close()
             
             flash('Configurações salvas com sucesso!', 'success')

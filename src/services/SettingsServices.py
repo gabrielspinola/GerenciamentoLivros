@@ -24,7 +24,7 @@ class SettingsServices:
         try:
             sql = "SELECT * FROM settings"
             self.db.cursor.execute(sql)
-            result = self.db.cursor.fetchall()
+            result = self.db.cursor.fetchone()
             if result:
                 return SettingsModel.from_row(result) 
             else:

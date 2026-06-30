@@ -8,7 +8,7 @@ class UsuarioModel:
     login: str = ""
     password: str = ""
     dataAniversario: str = ""
-    ativo: str = ""
+    ativo: str = "A"
     dataAniversario_raw: str = ""
     email: str = ""
 

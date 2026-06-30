@@ -3,12 +3,11 @@
 {% block title %}Configuração - Gerenciamento de Livros{% endblock %}
 
 {% block content %}
-{{ settings }}
-<div class="cotauner mt-4 d-flex">
+<div class="container mt-4 d-flex">
      <form class="row g-3" method="POST" action="/settings">
         <input type="hidden" name="idsettings" value="{{ settings.idsettings }}">
         <div class="col-md-6">
-            <label for="diasLivroEmprestado" class="form-label">Dias que o livro pode ser emprestado</label>
+            <label for="diasLivroEmprestado" class="form-label">Dias de Empréstimo</label>
             <input type="text" class="form-control" id="diasLivroEmprestado" name="diasLivroEmprestado" value="{{ settings.diasLivroEmprestado }}" required>
         </div>
         <div class="col-12 ">

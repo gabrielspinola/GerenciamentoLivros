@@ -10,14 +10,12 @@ class UsuarioServices:
     #Cria um novo registro
     def create(self, usuario: UsuarioModel) -> Optional[UsuarioModel]:
         try:
+            ativo = usuario.ativo or 'A'
             if usuario.dataAniversario != '':
-                sql = "INSERT INTO usuarios (nome, login, password, dataAniversario, email) VALUES (%s, %s, %s, %s, %s)"
-                #data_obj = datetime.strptime(usuario.dataAniversario, '%Y-%m-%d')
-                #usuario.dataAniversario = data_obj.strftime('%d/%m/%Y')
-            
-                self.db.cursor.execute(sql, (usuario.nome, usuario.login, usuario.password, usuario.dataAniversario, usuario.email))
+                sql = "INSERT INTO usuarios (nome, login, password, dataAniversario, email, ativo) VALUES (%s, %s, %s, %s, %s, %s)"
+                self.db.cursor.execute(sql, (usuario.nome, usuario.login, usuario.password, usuario.dataAniversario, usuario.email, ativo))
             else:
-                self.db.cursor.execute("INSERT INTO usuarios (nome, login, password, email) VALUES (%s, %s, %s, %s)", (usuario.nome, usuario.login, usuario.password, usuario.email))
+                self.db.cursor.execute("INSERT INTO usuarios (nome, login, password, email, ativo) VALUES (%s, %s, %s, %s, %s)", (usuario.nome, usuario.login, usuario.password, usuario.email, ativo))
                 
             self.db.connection.commit()
             return (f"Usuário {usuario.nome} criado com sucesso.")

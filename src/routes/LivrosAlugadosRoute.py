@@ -6,6 +6,7 @@ from utils.utils import adicionar_dias_uteis
 from services.LivrosAlugadosServices import LivrosAlugadosServices
 from services.LivrosServices import LivroServices
 from services.UsuarioServices import UsuarioServices
+from services.SettingsServices import SettingsServices
 from model.LivrosAlugadosModel import LivrosAlugadosModel
 
 class LivrosAlugadosRoute(Routes):
@@ -70,7 +71,9 @@ class LivrosAlugadosRoute(Routes):
             livroAlugado_data = LivrosAlugadosModel(idLivrosAlugados=0, idlivro=0, idusuario=0, nome="", titulo="", dataAluguel="", dataDevolucao="", dataEntrega="")
             listaLivros_disponiveis = LivroServices(self.db).listar_livros_disponiveis()
             listaUsuarios = UsuarioServices(self.db).listar_allAtivos()
-            data_Prev_Devolucao = adicionar_dias_uteis(date.today(), 7).strftime('%Y-%m-%d')
+            settings_service = SettingsServices(self.db)
+            settings = settings_service.listar_config()
+            data_Prev_Devolucao = adicionar_dias_uteis(date.today(), int(settings.diasLivroEmprestado)).strftime('%Y-%m-%d')
             self.db.close()
             return render_template("pages/alugDevolLivro.html", livroAlugado=livroAlugado_data, livrosDisponiveis=listaLivros_disponiveis, 
                                                                 usuarios=listaUsuarios, data_Prev_Devolucao=data_Prev_Devolucao, 
