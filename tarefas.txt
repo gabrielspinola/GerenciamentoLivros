@@ -47,21 +47,24 @@
   - Link para ativar a conta - ok
   - Colocar campo para confirmar a senha e verificar se as senhas digitadas são identicas.
 
+- Ajustar menu dropdown - OK
+- Melhorar a mensagens do flash_messages - OK
+
+- Separar o front do back end deixando 2 aplicações no projeto.
+- Pesquisar sobre blueprint Flask - Implementar
+
 - Criar tipos de acesso para os usuários (permissões)
 
 - Criar tela principal do sistema
     - Melhorar tela principal. Ela está crua
     - Colocar calendário para mostrar quando os livros serão devolvidos
+
+- Implementar autenticação JWT nas requisições 
     
 - Ajustar usuario. Funcionalidade para desativar o usuário
 
 - Melhorar log 
 
 - Ajustar cadastro de livros para adicionar uma imagem do livro
-
-- Ajustar menu dropdown - OK
-- Melhorar a mensagens do flash_messages - OK
-
-- Pesquisar sobre blueprint Flask - Implementar
 
 - Ajuste do README para poder colocar o passo a passo para rodar a aplicação. 
