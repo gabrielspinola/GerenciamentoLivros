@@ -11,6 +11,7 @@ class UsuarioModel:
     ativo: str = "A"
     dataAniversario_raw: str = ""
     email: str = ""
+    ativo_raw: str = ""
 
     def to_dict(self) -> dict:
         # Converte para dicionário
@@ -29,6 +30,7 @@ class UsuarioModel:
             password=row[3],
             dataAniversario=row[4].strftime("%d/%m/%Y") if row[4] else '',
             dataAniversario_raw=row[4],
-            ativo= "ATIVO" if row[5]=='A' else "INATIVO",
+            ativo=row[5],
+            ativo_raw="ATIVO" if row[5]=='A' else "INATIVO",
             email=row[6]
         )
