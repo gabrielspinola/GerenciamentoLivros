@@ -9,7 +9,7 @@ class PrincRoute(Routes):
     def __init__(self, app):
         self.app = app
         self.db = DatabaseConnection()
-        self.register_routes()    
+        self.register_routes()
 
     def register_routes(self):
         @self.app.route('/')

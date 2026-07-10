@@ -51,7 +51,7 @@
 - Melhorar a mensagens do flash_messages - OK
 
 - Separar o front do back end deixando 2 aplicações no projeto.
-- Pesquisar sobre blueprint Flask - Implementar
+- Pesquisar sobre blueprint Flask - É como um módulo de rotas dentro do Flask - OK
 
 - Criar tipos de acesso para os usuários (permissões)
 
