@@ -59,8 +59,14 @@
     - Melhorar tela principal. Ela está crua
     - Colocar calendário para mostrar quando os livros serão devolvidos
 
-- Implementar autenticação JWT nas requisições 
-    
+- Implementar autenticação JWT nas requisições -OK
+
+- Dividir backend de frontend.  
+    - Criar Backend -
+        - Livros 
+        -
+    -Ajustar frontend
+
 - Ajustar usuario. Funcionalidade para desativar o usuário
 
 - Melhorar log 
