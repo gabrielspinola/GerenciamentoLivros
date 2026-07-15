@@ -1,6 +1,6 @@
 from typing import List, Optional
 from models.livro import Livro
-from database.connection import get_db_connection
+from database.Connection import get_db_connection
 
 class LivroRepository:
     def listar_todos(self) -> List[Livro]:
@@ -40,5 +40,5 @@ class LivroRepository:
             with conn.cursor() as cursor:
                 affected = cursor.execute("DELETE FROM livros WHERE idlivro = %s", (idlivro,))
                 return affected > 0
-
+            
 livro_repo = LivroRepository()
