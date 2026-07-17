@@ -2,7 +2,7 @@ from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 import logging
 
-from controllers import LivroController
+from controllers import LivroController, UsuarioController, AuthController
 logger = logging.getLogger(__name__)
 
 logging.basicConfig(
@@ -22,6 +22,8 @@ app = FastAPI(
 )
 
 app.include_router(LivroController.router)
+app.include_router(UsuarioController.router)
+app.include_router(AuthController.router)
 
 #@app.get("/")
 #async def root():
