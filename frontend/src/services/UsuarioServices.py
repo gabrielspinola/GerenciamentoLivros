@@ -1,129 +1,211 @@
-from datetime import datetime
+import os
+from dotenv import load_dotenv 
+from typing import List, Optional
+import requests
 from mysql.connector import Error
 from model.UsuarioModel import UsuarioModel
-from typing import List, Optional
+from services.TokenServices import TokenManager
+
+load_dotenv()
 
 class UsuarioServices:
-    def __init__(self, db_connection):
-        self.db = db_connection
+    def __init__(self, username=None, password=None):
+        self.BASE_URL = os.getenv("BASE_URL_BACK")        
+        self.username = username
+        self.password = password
 
-    #Cria um novo registro
+    #Cria um novo registro pela tela de cadastro dentro do sistema
     def create(self, usuario: UsuarioModel) -> Optional[UsuarioModel]:
         try:
-            ativo = usuario.ativo or 'A'
-            if usuario.dataAniversario != '':
-                sql = "INSERT INTO usuarios (nome, login, password, dataAniversario, email, ativo) VALUES (%s, %s, %s, %s, %s, %s)"
-                self.db.cursor.execute(sql, (usuario.nome, usuario.login, usuario.password, usuario.dataAniversario, usuario.email, ativo))
+            token_manager = TokenManager(login=self.username, password=self.password)
+            token = token_manager.obter_token()
+            if token:
+                response = requests.post(
+                    f"{self.BASE_URL}/usuarios",
+                    json=usuario.model_dump(mode="json"),
+                    headers = {"Authorization": f"Bearer {token}"}
+                )
+                response.raise_for_status()
+                return UsuarioModel.model_validate(response.json())
             else:
-                self.db.cursor.execute("INSERT INTO usuarios (nome, login, password, email, ativo) VALUES (%s, %s, %s, %s, %s)", (usuario.nome, usuario.login, usuario.password, usuario.email, ativo))
-                
-            self.db.connection.commit()
-            return (f"Usuário {usuario.nome} criado com sucesso.")
+                print("Não foi possível obter uma autenticação.")
+                return None
         except Error as e:
-            self.db.connection.rollback()
-            print(f"Erro ao salvar usuário: {e}")
-            return (f"Erro ao salvar usuário: {e}")
+            print(f"Erro ao criar usuário: {e}")
+            return (f"Erro ao criar usuário: {e}")
+        
+    #Cria um novo usuário fora da tela do sistema. Envia e-mail de confirmação para o usuário. O usuário só será ativado após a confirmação do e-mail.
+    def create_com_email(self, usuario: UsuarioModel) -> Optional[UsuarioModel]:
+        try:
+            #token_manager = TokenManager(login=self.username, password=self.password)
+            #token = token_manager.obter_token()
+            
+            response = requests.post(
+                f"{self.BASE_URL}/usuarios/com-email",
+                json=usuario.model_dump(mode="json")
+            )
+            response.raise_for_status()
+            return UsuarioModel.model_validate(response.json())            
+        except Error as e:
+            print(f"Erro ao criar usuário: {e}")
+            return (f"Erro ao criar usuário: {e}")
+
 
     #Lista todos os registros
     def listar_all(self) -> List[UsuarioModel]:
         try:
-            sql = "SELECT * FROM usuarios"
-            self.db.cursor.execute(sql)
-            result = self.db.cursor.fetchall()
-            if result:
-                return [UsuarioModel.from_row(row) for row in result]
+            token_manager = TokenManager(login=self.username, password=self.password)
+            token = token_manager.obter_token()
+            if token:
+                response = requests.get(
+                    f"{self.BASE_URL}/usuarios",
+                    headers = {"Authorization": f"Bearer {token}"}
+                )
+                response.raise_for_status()
+                return [UsuarioModel.model_validate(item) for item in response.json()]
             else:
+                print("Não foi possível obter uma autenticação.")
                 return None
         except Error as e:
             print(f"Erro ao listar usuários: {e}")
             return []
+ 
         
     #Lista todos os registros
     def listar_allAtivos(self) -> List[UsuarioModel]:
         try:
-            sql = "SELECT * FROM usuarios WHERE ativo = 'A'"
-            self.db.cursor.execute(sql)
-            result = self.db.cursor.fetchall()
-            if result:
-                return [UsuarioModel.from_row(row) for row in result]
+            token_manager = TokenManager(login=self.username, password=self.password)
+            token = token_manager.obter_token()
+            if token:
+                response = requests.get(
+                    f"{self.BASE_URL}/usuarios/ativos",
+                    headers = {"Authorization": f"Bearer {token}"}
+                )
+                response.raise_for_status()
+                return [UsuarioModel.model_validate(item) for item in response.json()]
             else:
+                print("Não foi possível obter uma autenticação.")
                 return None
         except Error as e:
             print(f"Erro ao listar usuários: {e}")
-            return []
+            return []       
         
     #Lista por ID
     def consultar_id(self, id) -> Optional[UsuarioModel]:
         try:
-            sql = "SELECT * FROM usuarios WHERE idusuario = %s"
-            self.db.cursor.execute(sql, (id,))
-            result = self.db.cursor.fetchone()
-            if result:
-                return UsuarioModel.from_row(result)
+            token_manager = TokenManager(login=self.username, password=self.password)
+            token = token_manager.obter_token()
+            if token:
+                response = requests.get(
+                    f"{self.BASE_URL}/usuarios/{id}",
+                    headers = {"Authorization": f"Bearer {token}"}
+                )
+                response.raise_for_status()
+                return UsuarioModel.model_validate(response.json())
             else:
+                print("Não foi possível obter uma autenticação.")
                 return None
         except Error as e:
             print(f"Erro ao consultar usuário: {e}")
             return []
         
     #Consulta por Login
-    def consultar_login(self, login) -> Optional[UsuarioModel]:
+    def consultar_login(self, login, password) -> Optional[UsuarioModel]:
+       try:
+         token_manager = TokenManager(login=login, password=password)
+         token = token_manager.obter_token()
+         if token:
+            response = requests.get(
+                f"{self.BASE_URL}/usuarios/login/{login}",
+                headers = {"Authorization": f"Bearer {token}"}
+            )
+            response.raise_for_status()
+            return UsuarioModel.model_validate(response.json())
+         else:
+            print("Não foi possível obter uma autenticação.")
+            return None
+       
+       except Error as e:
+           print(f"Erro ao consultar usuário: {e}")
+           return []
+       
+    #Verifica se o login já existe
+    def validar_login(self, login) -> Optional[bool]:   
         try:
-            sql = "SELECT * FROM usuarios WHERE login = %s"
-            self.db.cursor.execute(sql, (login,))
-            result = self.db.cursor.fetchone()
-            if result:
-                return UsuarioModel.from_row(result)
-            else:
-                return None
+            response = requests.get(
+                f"{self.BASE_URL}/usuarios/valida-login/{login}"
+            )
+            response.raise_for_status()
+            return response.json()  # Retorna True se o login estiver disponível, False caso contrário
         except Error as e:
-            print(f"Erro ao consultar usuário: {e}")
-            return []
-
+            print(f"Erro ao validar login: {e}")
+            return None
+        
     #Deletar por ID
     def deletar_id(self, id):
         try:
-            sql = "DELETE FROM usuarios WHERE idusuario = %s"
-            self.db.cursor.execute(sql, (id,))
-            self.db.connection.commit()
-            return (f"Usuário com ID {id} deletado com sucesso.")
+            token_manager = TokenManager(login=self.username, password=self.password)
+            token = token_manager.obter_token()
+            if token:
+                response = requests.delete(
+                    f"{self.BASE_URL}/usuarios/{id}",
+                    headers = {"Authorization": f"Bearer {token}"}
+                )
+                response.raise_for_status()
+                return (f"Usuário com ID {id} deletado com sucesso.")
+            else:
+                print("Não foi possível obter uma autenticação.")
+                return None
         except Error as e:
-            self.db.connection.rollback()
-            print (f"Erro ao deletar usuário: {e}")
-            return (f"Erro ao deletar usuário: {e}")
+            print(f"Erro ao deletar usuário: {e}")
+            return (f"Erro ao deletar usuário: {e}")        
             
     #Atualiza dados na tabela
     def atualizar(self, usuario: UsuarioModel) -> Optional[UsuarioModel]:
         try:
-            sql = "UPDATE usuarios SET "
-            fields = []
-            values = []
-            if usuario.nome:
-                fields.append("nome = %s")
-                values.append(usuario.nome)
-            if usuario.login:
-                fields.append("login = %s")
-                values.append(usuario.login)
-            if usuario.password:
-                fields.append("password = %s")
-                values.append(usuario.password)
-            if usuario.dataAniversario:
-                fields.append("dataAniversario = %s")
-                values.append(usuario.dataAniversario)
-            if usuario.email:
-                fields.append("email = %s")
-                values.append(usuario.email)
-            values.append(usuario.idusuario)
-
-            sql += ", ".join(fields) + " WHERE idusuario = %s"
-            self.db.cursor.execute(sql, tuple(values))
-            self.db.connection.commit()
-            if self.db.cursor.rowcount > 0:
-                return(f"Usuário com ID {usuario.idusuario} atualizado com sucesso.")
+            token_manager = TokenManager(login=self.username, password=self.password)
+            token = token_manager.obter_token()
+            if token:
+                response = requests.patch(
+                    f"{self.BASE_URL}/usuarios/{usuario.idusuario}",
+                    json=usuario.model_dump(mode="json"),
+                    headers = {"Authorization": f"Bearer {token}"}
+                )
+                response.raise_for_status()
+                return UsuarioModel.model_validate(response.json())
             else:
-                print (f"Nenhum usuário encontrado com ID {usuario.idusuario}.")
-                return (f"Nenhum usuário encontrado com ID {usuario.idusuario}.")
+                print("Não foi possível obter uma autenticação.")
+                return None
         except Error as e:
-            self.db.connection.rollback()
-            print (f"Erro ao atualizar usuário: {e}")
+            print(f"Erro ao atualizar usuário: {e}")
             return (f"Erro ao atualizar usuário: {e}")
+        
+        
+    def ativar_usuario(self, login) -> Optional[UsuarioModel]:
+        try:
+            token_manager = TokenManager(login=self.username, password=self.password)
+            token = token_manager.obter_token()
+            if token:
+                response = requests.patch(
+                    f"{self.BASE_URL}/usuarios/ativar/{login}",
+                    headers = {"Authorization": f"Bearer {token}"}
+                )
+                response.raise_for_status()
+                return UsuarioModel.model_validate(response.json())
+            else:
+                print("Não foi possível obter uma autenticação.")
+                return None
+        except Error as e:
+            print(f"Erro ao ativar usuário: {e}")
+            return (f"Erro ao ativar usuário: {e}")
+        
+    def valida_token(self, token) -> Optional[UsuarioModel]:
+        try:
+            response = requests.get(
+                f"{self.BASE_URL}/usuarios/valida-token/{token}"
+            )
+            response.raise_for_status()
+            return response.json()  # Retorna True se o login estiver disponível, False caso contrário
+        except Error as e:
+            print(f"Erro ao validar token: {e}")
+            return None

@@ -11,7 +11,6 @@ class Usuario(BaseModel):
     dataAniversario: date #= Field(..., pattern=r'^\d{4}  -\d{2}-\d{2}$')
     ativo: str #= Field(..., pattern=r'^[SN]$')
     email: str = Field(..., format="email")
-    ativo_raw: str = ""
     
     #@field_validator('ativo')
     #@classmethod

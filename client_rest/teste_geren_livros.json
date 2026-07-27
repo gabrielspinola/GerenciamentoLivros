@@ -6,6 +6,254 @@
   },
   "item": [
     {
+      "name": "Usuarios",
+      "item": [
+        {
+          "name": "Get Usuarios por ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "disabled": false,
+                "type": "default"
+              }
+            ],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "http://127.0.0.1:8000/usuarios/1",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1:8000"
+              ],
+              "path": [
+                "usuarios",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "Get Usuarios por login",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "disabled": false,
+                "type": "default"
+              }
+            ],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "http://127.0.0.1:8000/usuarios/login/joao.silva",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1:8000"
+              ],
+              "path": [
+                "usuarios",
+                "login",
+                "joao.silva"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "Get Usuarios",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "disabled": false,
+                "type": "default"
+              }
+            ],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "http://127.0.0.1:8000/usuarios",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1:8000"
+              ],
+              "path": [
+                "usuarios"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "Get Usuarios Ativos",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "disabled": false,
+                "type": "default"
+              }
+            ],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "http://127.0.0.1:8000/usuarios/ativos",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1:8000"
+              ],
+              "path": [
+                "usuarios",
+                "ativos"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "Post Usuarios",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "disabled": false,
+                "type": "default"
+              }
+            ],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "http://127.0.0.1:8000/usuarios/",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1:8000"
+              ],
+              "path": [
+                "usuarios",
+                ""
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": " {\n    \"idusuario\": 1,\n    \"nome\": \"João Silva\",\n    \"login\": \"joao.silva\",\n    \"password\": \"123456\",\n    \"dataAniversario\": \"1990-01-01\",\n    \"ativo\": \"A\",\n    \"email\": \"\"\n  }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Post Usuarios com email",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "http://127.0.0.1:8000/usuarios/com-email",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1:8000"
+              ],
+              "path": [
+                "usuarios",
+                "com-email"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Gabriel Spinola\",\n  \"login\": \"gabriel.spinola\",\n  \"password\": \"123456\",\n  \"dataAniversario\": \"1985-12-15\",\n  \"ativo\": \"\",\n  \"email\": \"gspinola@gmail.com\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Get Usuarios Validar login",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "http://127.0.0.1:8000/usuarios/valida-login/joao.silva",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1:8000"
+              ],
+              "path": [
+                "usuarios",
+                "valida-login",
+                "joao.silva"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        }
+      ]
+    },
+    {
       "name": "Livros",
       "item": [
         {
@@ -25,10 +273,13 @@
             },
             "description": "",
             "url": {
-              "raw": "http://localhost:5000/livros",
+              "raw": "http://127.0.0.1:8000/livros",
               "protocol": "http",
               "host": [
-                "localhost:5000"
+                "127",
+                "0",
+                "0",
+                "1:8000"
               ],
               "path": [
                 "livros"
@@ -38,7 +289,7 @@
             },
             "body": {
               "mode": "raw",
-              "raw": " {\n    \"titulo\": \"Dom Casmurro\",\n    \"autor\": \"Machado de Assis\",\n    \"ano_publicacao\": 1899,\n    \"genero\": \"Romance\",\n    \"bloqueado\": \"N\"\n  }",
+              "raw": "  {\n    \"titulo\": \"O Cortiço\",\n    \"autor\": \"Aluísio Azevedo\",\n    \"ano_publicacao\": 1890,\n    \"genero\": \"Naturalismo\",\n    \"bloqueado\": \"N\"\n  }",
               "options": {
                 "raw": {
                   "language": "json"
@@ -64,10 +315,13 @@
             },
             "description": "",
             "url": {
-              "raw": "http://localhost:5000/livros",
+              "raw": "http://127.0.0.1:8000/livros",
               "protocol": "http",
               "host": [
-                "localhost:5000"
+                "127",
+                "0",
+                "0",
+                "1:8000"
               ],
               "path": [
                 "livros"
@@ -96,10 +350,13 @@
         },
         "description": "",
         "url": {
-          "raw": "http://localhost:5000/auth/login",
+          "raw": "http://127.0.0.1:8000/auth/login",
           "protocol": "http",
           "host": [
-            "localhost:5000"
+            "127",
+            "0",
+            "0",
+            "1:8000"
           ],
           "path": [
             "auth",
@@ -110,7 +367,7 @@
         },
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"username\": \"admin\",\n  \"senha\": \"admin123\"\n}",
+          "raw": "{\n  \"login\": \"joao.silva\",\n  \"password\": \"123456\"\n}",
           "options": {
             "raw": {
               "language": "json"

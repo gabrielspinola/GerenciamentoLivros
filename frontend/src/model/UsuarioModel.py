@@ -1,36 +1,30 @@
-from dataclasses import dataclass, asdict
+from datetime import date
+from pydantic import BaseModel, Field, field_validator, model_validator
 from typing import Optional
 
-@dataclass
-class UsuarioModel:
+class UsuarioModel(BaseModel):
     idusuario: Optional[int] = None
-    nome: str = ""
-    login: str = ""
-    password: str = ""
-    dataAniversario: str = ""
-    ativo: str = "A"
+    nome: str 
+    login: str 
+    password: str
+    dataAniversario: date
     dataAniversario_raw: str = ""
-    email: str = ""
+    ativo: str
+    email: str
     ativo_raw: str = ""
 
-    def to_dict(self) -> dict:
-        # Converte para dicionário
-        data = asdict(self)
-        if self.dataAniversario:
-            data['dataAniversario'] = self.dataAniversario.isoformat()
-        return data
+    @model_validator(mode="after")
+    def calcular_campos_raw(self) -> "UsuarioModel":
+        self.dataAniversario_raw = self.dataAniversario.strftime("%d/%m/%Y")
+        self.ativo_raw = "ATIVO" if self.ativo == "A" else "INATIVO"
+        return self
+
+class UsuarioModelVazio():
+    idusuario: int
+    nome: str 
+    login: str 
+    password: str
+    dataAniversario: date
+    ativo: str
+    email: str
     
-    @classmethod
-    def from_row(cls, row: tuple) -> 'UsuarioModel':
-        # Cria instância a partir de uma linha do banco
-        return cls(
-            idusuario=row[0],
-            nome=row[1],
-            login=row[2],
-            password=row[3],
-            dataAniversario=row[4].strftime("%d/%m/%Y") if row[4] else '',
-            dataAniversario_raw=row[4],
-            ativo=row[5],
-            ativo_raw="ATIVO" if row[5]=='A' else "INATIVO",
-            email=row[6]
-        )

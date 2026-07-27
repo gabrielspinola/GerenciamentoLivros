@@ -39,7 +39,7 @@ class PrincRoute(Routes):
                 
                 self.db.connect()
                 usuario = UsuarioServices(self.db)
-                usu = usuario.consultar_login(username)
+                usu = usuario.consultar_login(username, password)
                 
                 self.db.close()
                 
@@ -49,6 +49,7 @@ class PrincRoute(Routes):
                             flash('Confirme seu cadastro antes de entrar.', 'warning')
                             return render_template('pages/login.html')
                         session['username'] = username
+                        session['usuario_pass'] = password
                         session['name'] = usu.nome
                         flash(f'Bem-vindo, {usu.nome}!', 'success')
                         return redirect('/home')
@@ -65,6 +66,7 @@ class PrincRoute(Routes):
         def logout():
             session.pop('username', None)
             session.pop('name', None)
+            session.pop('usuario_completo', None)
             session.clear()
             #flash('Você saiu com sucesso!', 'success')
             return redirect('/login')

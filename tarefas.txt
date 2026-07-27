@@ -53,19 +53,48 @@
 - Separar o front do back end deixando 2 aplicações no projeto.
 - Pesquisar sobre blueprint Flask - É como um módulo de rotas dentro do Flask - OK
 
+- Implementar autenticação JWT nas requisições - OK
+
 - Criar tipos de acesso para os usuários (permissões)
 
 - Criar tela principal do sistema
     - Melhorar tela principal. Ela está crua
     - Colocar calendário para mostrar quando os livros serão devolvidos
 
-- Implementar autenticação JWT nas requisições -OK
-
 - Dividir backend de frontend.  
-    - Criar Backend -
-        - Livros 
-        -
-    -Ajustar frontend
+    - Criar Backend - ok
+        - Token - ok
+        - Livros - ok
+        - Usuários - ok
+        - Envio de e-mail usuário novo - 
+        - AlugarLivros
+        - Settings
+
+    - Ajustar frontend para realizar os requests no backend
+        - Retirar a decriptação(token) do frontend  
+        - Ajustar login
+            - Login do sistema - ok
+            - Criar novo usuário - ok
+            - Envio de e-mail pelo backend - ok
+        - Ajustar tela de livros
+            - Cadastro 
+            - Listagem
+        -Ajustar tela de usuários
+            - Cadastro 
+            - Listagem
+        - Ajustar tela de aluguel de livros
+            - Cadastro 
+            - Listagem
+        - Ajustar tela de Settings
+            - Cadastro
+            - Listagem
+        - Criar chache para reaproveitamento do token
+
+    - Ajustar classes model no frontend para utilizar Pydantic
+        - Usuario -
+        - Livro
+        - Aluguel Livro
+        - Settings
 
 - Ajustar usuario. Funcionalidade para desativar o usuário
 

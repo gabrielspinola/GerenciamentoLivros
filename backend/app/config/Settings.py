@@ -16,6 +16,8 @@ class Settings:
     mail_server: str
     mail_port: int
     mail_use_tls: bool
+    mail_username: str
+    mail_password: str
 
     def __init__(self):
         self.db_host = os.getenv("DB_HOST")
@@ -30,3 +32,5 @@ class Settings:
         self.mail_server = os.getenv("MAIL_SERVER")
         self.mail_port = int(os.getenv("MAIL_PORT"))
         self.mail_use_tls = os.getenv("MAIL_USE_TLS").lower() == "true"
+        self.mail_username = os.getenv("MAIL_USERNAME")
+        self.mail_password = os.getenv("MAIL_PASSWORD")

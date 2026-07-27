@@ -17,3 +17,19 @@ async def listar_livros(usuario_atual: UserInDB = Depends(get_current_user)):
 async def criar_livro(livro: Livro, usuario_atual: UserInDB = Depends(get_current_user)):
     novo_id = LivroRepository().criar(livro)
     return LivroRepository().buscar_por_id(novo_id)
+
+@router.patch("/{id}", response_model=Livro, summary="Atualiza um livro existente", description="Atualiza os dados de um livro existente no sistema. Requer autenticação.")
+async def atualizar_livro(id: int, livro: Livro, usuario_atual: UserInDB = Depends(get_current_user)):
+    livro_existente = LivroRepository().buscar_por_id(id)
+    if not livro_existente:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Livro não encontrado")
+    LivroRepository().atualizar(id, livro)
+    return LivroRepository().buscar_por_id(id)
+
+@router.delete("/{id}", status_code=status.HTTP_204_NO_CONTENT, summary="Deleta um livro", description="Deleta um livro existente no sistema. Requer autenticação.")
+async def deletar_livro(id: int, usuario_atual: UserInDB = Depends(get_current_user)):
+    livro_existente = LivroRepository().buscar_por_id(id)
+    if not livro_existente:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Livro não encontrado")
+    LivroRepository().deletar(id)
+    return None

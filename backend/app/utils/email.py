@@ -7,7 +7,7 @@ import smtplib
 from email.message import EmailMessage
 
 
-def generate_confirmation_token(email: str, login: str) -> str:
+def generate_confirmation_token_email(email: str, login: str) -> str:
     payload = json.dumps({"email": email, "login": login}, sort_keys=True)
     secret = os.getenv("SECRET_KEY", "sua_chave_secreta_aqui_mude_em_producao")
     signature = hmac.new(secret.encode("utf-8"), payload.encode("utf-8"), hashlib.sha256).hexdigest()
@@ -15,24 +15,8 @@ def generate_confirmation_token(email: str, login: str) -> str:
     return base64.urlsafe_b64encode(token_data.encode("utf-8")).decode("utf-8")
 
 
-def verify_confirmation_token(token: str):
-    try:
-        decoded = base64.urlsafe_b64decode(token.encode("utf-8")).decode("utf-8")
-        payload, signature = decoded.rsplit(":", 1)
-        expected_signature = hmac.new(
-            os.getenv("SECRET_KEY", "sua_chave_secreta_aqui_mude_em_producao").encode("utf-8"),
-            payload.encode("utf-8"),
-            hashlib.sha256,
-        ).hexdigest()
-        if hmac.compare_digest(signature, expected_signature):
-            return json.loads(payload)
-    except Exception:
-        return None
-    return None
-
-
-def send_confirmation_email(to_email: str, nome: str, token: str) -> bool:
-    confirmation_url = f"http://localhost:8080/confirmar-email/{token}"
+def send_confirmation_email(to_email: str, nome: str, login: str) -> bool:
+    confirmation_url = f"http://localhost:8080/confirmar-email/{generate_confirmation_token_email(to_email, login)}"
     message = EmailMessage()
     message["Subject"] = "Confirme seu cadastro"
     message["From"] = os.getenv("MAIL_DEFAULT_SENDER", "no-reply@gerenciamentolivros.local")
@@ -63,3 +47,18 @@ def send_confirmation_email(to_email: str, nome: str, token: str) -> bool:
         print(f"[email] Erro ao enviar e-mail: {exc}")
         print(confirmation_url)
         return False
+
+def verify_confirmation_token(token: str):
+    try:
+        decoded = base64.urlsafe_b64decode(token.encode("utf-8")).decode("utf-8")
+        payload, signature = decoded.rsplit(":", 1)
+        expected_signature = hmac.new(
+            os.getenv("SECRET_KEY", "sua_chave_secreta_aqui_mude_em_producao").encode("utf-8"),
+            payload.encode("utf-8"),
+            hashlib.sha256,
+        ).hexdigest()
+        if hmac.compare_digest(signature, expected_signature):
+            return json.loads(payload)
+    except Exception:
+        return None
+    return None
