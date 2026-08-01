@@ -7,6 +7,7 @@ Sistema para gerenciamento de livros, com backend em **FastAPI** (Python) e aute
 - [Pré-requisitos](#pré-requisitos)
 - [Backend](#backend)
 - [Frontend](#frontend)
+- [Debug](#debug)
 - [Estrutura do projeto](#estrutura-do-projeto)
 - [Problemas comuns](#problemas-comuns)
 
@@ -18,6 +19,7 @@ Antes de começar, tenha instalado:
 
 - [Python 3.11+](https://www.python.org/downloads/)
 - [MySQL](https://dev.mysql.com/downloads/)
+- [Visual Studio Code](https://code.visualstudio.com/) com a extensão [Python](https://marketplace.visualstudio.com/items?itemName=ms-python.python) (necessária para o debug — veja a seção [Debug](#debug))
 - Git (opcional, para clonar o repositório)
 
 ---
@@ -145,12 +147,79 @@ MARGEM_SEGURANCA_SEGUNDOS=30
 python .\src\main.py
 ```
 
+A aplicação estará disponível em `http://127.0.0.1:8080`.
+
+---
+
+## Debug
+
+O projeto já tem uma configuração de debug pronta em `.vscode/launch.json`, cobrindo backend e frontend — inclusive rodando **os dois ao mesmo tempo**, cada um com sua própria sessão de debug (dá pra colocar breakpoint num controller do backend e num service do frontend simultaneamente).
+
+### Configuração (`.vscode/launch.json`)
+
+Se o arquivo ainda não existir no seu clone do projeto, crie-o com o conteúdo abaixo:
+
+```json
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "FastAPI: Debug",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "uvicorn",
+      "args": ["main:app", "--reload", "--port", "8000"],
+      "cwd": "${workspaceFolder}/backend/app",
+      "python": "${workspaceFolder}/.venv/Scripts/python.exe",
+      "jinja": true,
+      "justMyCode": true
+    },
+    {
+      "name": "Flask: Debug",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/frontend/src/main.py",
+      "cwd": "${workspaceFolder}/frontend/src",
+      "python": "${workspaceFolder}/.venv/Scripts/python.exe",
+      "jinja": true,
+      "justMyCode": true
+    }
+  ],
+  "compounds": [
+    {
+      "name": "Debug Backend + Frontend",
+      "configurations": ["FastAPI: Debug", "Flask: Debug"],
+      "stopAll": true
+    }
+  ]
+}
+```
+
+> No Linux/macOS, troque `"python": "${workspaceFolder}/.venv/Scripts/python.exe"` por `"python": "${workspaceFolder}/.venv/bin/python"` (caminho do interpretador dentro da venv muda entre sistemas operacionais).
+
+### Como debugar
+
+1. Abra a pasta raiz do projeto no VS Code
+2. Coloque breakpoints nos arquivos que quiser inspecionar (clique à esquerda do número da linha)
+3. Vá na aba **Run and Debug** (`Ctrl+Shift+D`)
+4. No dropdown do topo, selecione uma das opções:
+   - **"FastAPI: Debug"** — roda só o backend
+   - **"Flask: Debug"** — roda só o frontend
+   - **"Debug Backend + Frontend"** — roda os dois juntos
+5. Aperte `F5`
+
+Quando a execução passar por um breakpoint, ela pausa e você pode inspecionar variáveis, avançar linha a linha (`F10`/`F11`) e usar o **Debug Console** para testar expressões na hora.
+
+> Rodando o compound (**"Debug Backend + Frontend"**), `Shift+F5` encerra as duas aplicações de uma vez, graças ao `"stopAll": true`.
+
 ---
 
 ## Estrutura do projeto
 
 ```
 GerenciamentoLivros/
+├── .vscode/
+│   └── launch.json          # configurações de debug (backend, frontend e ambos)
 ├── backend/
 │   └── app/
 │       ├── main.py
@@ -188,3 +257,6 @@ Verifique se você está enviando o header `Authorization: Bearer <token>` e se 
 
 **Rota `/algo/{id}` "roubando" uma rota mais específica (ex: `/algo/ativos`)**
 No FastAPI, rotas são resolvidas na ordem em que são declaradas. Sempre declare rotas fixas (`/ativos`, `/me`, etc.) **antes** de rotas com parâmetro dinâmico (`/{id}`) que compartilhem o mesmo prefixo.
+
+**Debug não inicia / erro `No module named 'uvicorn'` (ou similar) ao dar F5**
+Confira se a chave `"python"` no `launch.json` está apontando para o interpretador correto dentro da `.venv` (veja a seção [Debug](#debug)), e se as dependências já foram instaladas nela (`pip install -r requirements.txt`).

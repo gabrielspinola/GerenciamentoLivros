@@ -17,6 +17,7 @@ class UsuarioRoute(Routes):
                                    login = request.form.get("login"), 
                                    password = generate_password_hash(request.form.get("password")), 
                                    dataAniversario = request.form.get("dataAniversario"),
+                                   ativo="A",
                                    email = request.form.get("email"))
 
             usuario_service = UsuarioServices(username=session.get('username'), password=session.get('usuario_pass'))

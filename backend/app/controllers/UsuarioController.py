@@ -40,7 +40,7 @@ async def validar_token(token: str):
 
 @router.post("/", response_model=Usuario, status_code=status.HTTP_201_CREATED, summary="Cria um novo usuário", description="Cria um novo usuário no sistema. Requer autenticação.")
 async def criar_usuario(usuario: Usuario, usuario_atual: UserInDB = Depends(get_current_user)):
-    novo_usuario_id = UsuarioRepository().criar(usuario)    
+    novo_usuario_id = UsuarioRepository().criar(usuario)
     return UsuarioRepository().buscar_por_id(novo_usuario_id)
 
 @router.post("/com-email", response_model=Usuario, status_code=status.HTTP_201_CREATED, summary="Cria um novo usuário e envia e-mail de confirmação", description="Cria um novo usuário no sistema e envia um e-mail de confirmação. O usuário só será ativado após a confirmação do e-mail.")

@@ -6,15 +6,28 @@
       "type": "debugpy",
       "request": "launch",
       "module": "uvicorn",
-      "args": [
-        "main:app",
-        "--reload",
-        "--port",
-        "8000"
-      ],
+      "args": ["main:app", "--reload", "--port", "8000"],
       "cwd": "${workspaceFolder}/backend/app",
+      "python": "${workspaceFolder}/.venv/Scripts/python.exe",
       "jinja": true,
       "justMyCode": true
+    },
+    {
+      "name": "Flask: Debug",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/frontend/src/main.py",
+      "cwd": "${workspaceFolder}/frontend/src",
+      "python": "${workspaceFolder}/.venv/Scripts/python.exe",
+      "jinja": true,
+      "justMyCode": true
+    }
+  ],
+  "compounds": [
+    {
+      "name": "Debug Backend + Frontend",
+      "configurations": ["FastAPI: Debug", "Flask: Debug"],
+      "stopAll": true
     }
   ]
 }

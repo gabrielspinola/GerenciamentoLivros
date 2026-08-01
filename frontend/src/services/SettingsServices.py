@@ -1,46 +1,55 @@
-from datetime import datetime
-from mysql.connector import Error
+import os
+from dotenv import load_dotenv
+import requests
+from requests.exceptions import RequestException
+from typing import Optional
+
 from model.SettingsModel import SettingsModel
-from typing import List, Optional
+from services.TokenServices import TokenManager
+
+load_dotenv()
 
 class SettingsServices:
-    def __init__(self, db_connection):
-        self.db = db_connection
+    def __init__(self, username=None, password=None):
+        self.BASE_URL = os.getenv("BASE_URL_BACK")        
+        self.username = username
+        self.password = password
 
-    #Cria um novo registro
-    def create(self, settings: SettingsModel) -> Optional[SettingsModel]:
-        try:
-            sql = "INSERT INTO settings (diasLivroEmprestado) VALUES (%s)"
-            self.db.cursor.execute(sql, (settings.diasLivroEmprestado,))
-            self.db.connection.commit()
-            return (f"Configurações criadas com sucesso.")
-        except Error as e:
-            self.db.connection.rollback()
-            print(f"Erro ao salvar configurações: {e}")
-            return (f"Erro ao salvar configurações: {e}")
-    
     #Listar todas as configurações
     def listar_config(self) -> Optional[SettingsModel]:
         try:
-            sql = "SELECT * FROM settings"
-            self.db.cursor.execute(sql)
-            result = self.db.cursor.fetchone()
-            if result:
-                return SettingsModel.from_row(result) 
+            token_manager = TokenManager(login=self.username, password=self.password)
+            token = token_manager.obter_token()
+            if token:
+                response = requests.get(
+                    f"{self.BASE_URL}/settings",
+                    headers = {"Authorization": f"Bearer {token}"}
+                )
+                response.raise_for_status()
+                return SettingsModel.model_validate(response.json())
             else:
-                return None
-        except Error as e:
+                print("Não foi possível obter uma autenticação.")
+                return None            
+        except RequestException as e:
             print(f"Erro ao listar configurações: {e}")
             return []
     
-    #Atualizar configurações
-    def atualizar(self, settings: SettingsModel) -> Optional[SettingsModel]:
+    #Cria um novo registro ou atualiza um existente
+    def criar_atualizar(self, settings: SettingsModel) -> Optional[SettingsModel]:
         try:
-            sql = "UPDATE settings SET diasLivroEmprestado = %s, updatedAt = NOW() WHERE idsettings = %s"
-            self.db.cursor.execute(sql, (settings.diasLivroEmprestado, settings.idsettings))
-            self.db.connection.commit()
-            return (f"Configurações atualizadas com sucesso.")
-        except Error as e:
-            self.db.connection.rollback()
+            token_manager = TokenManager(login=self.username, password=self.password)
+            token = token_manager.obter_token()
+            if token:
+                response = requests.post(
+                    f"{self.BASE_URL}/settings",
+                    json=settings.model_dump(mode="json"),
+                    headers = {"Authorization": f"Bearer {token}"}
+                )
+                response.raise_for_status()
+                return SettingsModel.model_validate(response.json())
+            else:
+                print("Não foi possível obter uma autenticação.")
+                return None
+        except RequestException as e:
             print(f"Erro ao atualizar configurações: {e}")
             return (f"Erro ao atualizar configurações: {e}")

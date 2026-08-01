@@ -209,3 +209,4 @@ __marimo__/
 #tarefas.txt
 *.mwb.bak
 backend.bkp/
+token_cache.json

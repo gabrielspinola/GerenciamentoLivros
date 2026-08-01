@@ -2,7 +2,7 @@ from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 import logging
 
-from controllers import LivroController, UsuarioController, AuthController
+from controllers import LivroController, UsuarioController, AuthController, SettingsController
 logger = logging.getLogger(__name__)
 
 logging.basicConfig(
@@ -18,12 +18,13 @@ logging.getLogger("watchfiles").setLevel(logging.WARNING)
 app = FastAPI(
     title="API de Livros",
     description="API para gestão de livros com autenticação JWT",
-    version="1.0.0",
+    version="1.0.2",
 )
 
 app.include_router(LivroController.router)
 app.include_router(UsuarioController.router)
 app.include_router(AuthController.router)
+app.include_router(SettingsController.router)
 
 #@app.get("/")
 #async def root():

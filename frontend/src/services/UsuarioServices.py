@@ -2,7 +2,7 @@ import os
 from dotenv import load_dotenv 
 from typing import List, Optional
 import requests
-from mysql.connector import Error
+from requests.exceptions import RequestException
 from model.UsuarioModel import UsuarioModel
 from services.TokenServices import TokenManager
 
@@ -30,23 +30,20 @@ class UsuarioServices:
             else:
                 print("Não foi possível obter uma autenticação.")
                 return None
-        except Error as e:
+        except RequestException as e:
             print(f"Erro ao criar usuário: {e}")
             return (f"Erro ao criar usuário: {e}")
         
     #Cria um novo usuário fora da tela do sistema. Envia e-mail de confirmação para o usuário. O usuário só será ativado após a confirmação do e-mail.
     def create_com_email(self, usuario: UsuarioModel) -> Optional[UsuarioModel]:
         try:
-            #token_manager = TokenManager(login=self.username, password=self.password)
-            #token = token_manager.obter_token()
-            
             response = requests.post(
                 f"{self.BASE_URL}/usuarios/com-email",
                 json=usuario.model_dump(mode="json")
             )
             response.raise_for_status()
             return UsuarioModel.model_validate(response.json())            
-        except Error as e:
+        except RequestException as e:
             print(f"Erro ao criar usuário: {e}")
             return (f"Erro ao criar usuário: {e}")
 
@@ -66,7 +63,7 @@ class UsuarioServices:
             else:
                 print("Não foi possível obter uma autenticação.")
                 return None
-        except Error as e:
+        except RequestException as e:
             print(f"Erro ao listar usuários: {e}")
             return []
  
@@ -86,7 +83,7 @@ class UsuarioServices:
             else:
                 print("Não foi possível obter uma autenticação.")
                 return None
-        except Error as e:
+        except RequestException as e:
             print(f"Erro ao listar usuários: {e}")
             return []       
         
@@ -105,7 +102,7 @@ class UsuarioServices:
             else:
                 print("Não foi possível obter uma autenticação.")
                 return None
-        except Error as e:
+        except RequestException as e:
             print(f"Erro ao consultar usuário: {e}")
             return []
         
@@ -125,7 +122,7 @@ class UsuarioServices:
             print("Não foi possível obter uma autenticação.")
             return None
        
-       except Error as e:
+       except RequestException as e:
            print(f"Erro ao consultar usuário: {e}")
            return []
        
@@ -137,7 +134,7 @@ class UsuarioServices:
             )
             response.raise_for_status()
             return response.json()  # Retorna True se o login estiver disponível, False caso contrário
-        except Error as e:
+        except RequestException as e:
             print(f"Erro ao validar login: {e}")
             return None
         
@@ -156,7 +153,7 @@ class UsuarioServices:
             else:
                 print("Não foi possível obter uma autenticação.")
                 return None
-        except Error as e:
+        except RequestException as e:
             print(f"Erro ao deletar usuário: {e}")
             return (f"Erro ao deletar usuário: {e}")        
             
@@ -176,7 +173,7 @@ class UsuarioServices:
             else:
                 print("Não foi possível obter uma autenticação.")
                 return None
-        except Error as e:
+        except RequestException as e:
             print(f"Erro ao atualizar usuário: {e}")
             return (f"Erro ao atualizar usuário: {e}")
         
@@ -195,7 +192,7 @@ class UsuarioServices:
             else:
                 print("Não foi possível obter uma autenticação.")
                 return None
-        except Error as e:
+        except RequestException as e:
             print(f"Erro ao ativar usuário: {e}")
             return (f"Erro ao ativar usuário: {e}")
         
@@ -206,6 +203,6 @@ class UsuarioServices:
             )
             response.raise_for_status()
             return response.json()  # Retorna True se o login estiver disponível, False caso contrário
-        except Error as e:
+        except RequestException as e:
             print(f"Erro ao validar token: {e}")
             return None
