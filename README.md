@@ -7,6 +7,7 @@ Sistema para gerenciamento de livros, com backend em **FastAPI** (Python) e aute
 - [Pré-requisitos](#pré-requisitos)
 - [Backend](#backend)
 - [Frontend](#frontend)
+- [Testando a API](#testando-a-api)
 - [Debug](#debug)
 - [Estrutura do projeto](#estrutura-do-projeto)
 - [Problemas comuns](#problemas-comuns)
@@ -20,6 +21,7 @@ Antes de começar, tenha instalado:
 - [Python 3.11+](https://www.python.org/downloads/)
 - [MySQL](https://dev.mysql.com/downloads/)
 - [Visual Studio Code](https://code.visualstudio.com/) com a extensão [Python](https://marketplace.visualstudio.com/items?itemName=ms-python.python) (necessária para o debug — veja a seção [Debug](#debug))
+- [Bruno](https://www.usebruno.com/) ou [Postman](https://www.postman.com/) (opcional, para testar os endpoints — veja a seção [Testando a API](#testando-a-api))
 - Git (opcional, para clonar o repositório)
 
 ---
@@ -103,43 +105,22 @@ A API estará disponível em `http://127.0.0.1:8000`, e a documentação interat
 
 ## Frontend
 
-O frontend é uma aplicação Flask que consome a API do backend. Atualmente ele também se conecta diretamente ao banco de dados em algumas partes — isso está em processo de migração para que passe a depender **somente** da API, então o `.env` abaixo ainda mantém as duas configurações.
+O frontend é uma aplicação Flask que consome a API do backend exclusivamente via HTTP — ele não acessa o banco de dados diretamente.
 
 ### 1. Criar o arquivo `.env`
 
 Na raiz do **frontend**, crie um arquivo `.env` com as variáveis abaixo.
 
-**Configurações do banco de dados** *(temporário — em migração para uso exclusivo via API):*
-
-| Variável | Descrição |
-|---|---|
-| `DB_HOST` | Host do banco de dados |
-| `DB_USER` | Usuário do banco de dados |
-| `DB_PASSWORD` | Senha do banco de dados |
-| `DB_DATABASE` | Nome da base de dados que será utilizada |
-
-**Configurações de conexão com a API e autenticação:**
-
 | Variável | Descrição |
 |---|---|
 | `BASE_URL_BACK` | URL base da API do backend (ex: `http://127.0.0.1:8000`) |
-| `SECRET_KEY` | Chave usada para validar o access token recebido da API |
-| `REFRESH_SECRET_KEY` | Chave usada para validar o refresh token recebido da API |
-| `ACCESS_TOKEN_EXPIRES` | Tempo de expiração do access token, em segundos |
-| `REFRESH_TOKEN_EXPIRES` | Tempo de expiração do refresh token, em segundos |
 | `MARGEM_SEGURANCA_SEGUNDOS` | Margem de segurança (em segundos) para renovar o token antes dele expirar de fato |
 
 Exemplo:
 ```env
 BASE_URL_BACK=http://127.0.0.1:8000
-SECRET_KEY=mySecretKey
-REFRESH_SECRET_KEY=myRefreshSecretKey
-ACCESS_TOKEN_EXPIRES=3600
-REFRESH_TOKEN_EXPIRES=86400
 MARGEM_SEGURANCA_SEGUNDOS=30
 ```
-
-> ⚠️ Os valores de `SECRET_KEY`/`REFRESH_SECRET_KEY` acima são só exemplo — use valores fortes e únicos em cada ambiente, e nunca reaproveite a mesma chave do backend sem necessidade real.
 
 ### 2. Executar a aplicação
 
@@ -148,6 +129,33 @@ python .\src\main.py
 ```
 
 A aplicação estará disponível em `http://127.0.0.1:8080`.
+
+---
+
+## Testando a API
+
+A pasta `client_rest/` contém uma coleção com todos os endpoints do backend, pronta pra testar sem precisar montar as requisições manualmente. Foi criada originalmente no **Bruno**, mas exportada num formato compatível também com o **Postman**.
+
+### Bruno
+
+1. Abra o Bruno
+2. **Open Collection** → selecione a pasta `client_rest/`
+3. As requisições já vêm organizadas por recurso (livros, usuários, auth, settings)
+4. O `/auth/login` tem um script que captura o token da resposta e preenche automaticamente a variável usada pelos demais endpoints — basta rodar o login uma vez e seguir testando os endpoints protegidos sem precisar copiar/colar o token manualmente.
+
+### Postman
+
+1. Abra o Postman
+2. **File → Import** → selecione a pasta `client_rest/` (ou o arquivo de coleção dentro dela)
+3. O Postman importa as requisições preservando pastas e nomes
+4. ⚠️ **O script de captura automática do token não é compatível com o Postman** — a sintaxe de scripts pós-resposta do Bruno (`bru`) é diferente da do Postman (`pm`). Depois de importar, é preciso reescrever esse script na aba **Tests** (ou **Post-response Scripts**, dependendo da versão) da requisição de login, algo como:
+   ```javascript
+   const response = pm.response.json();
+   pm.environment.set("token", response.access_token);
+   ```
+   Sem esse ajuste, o token não é preenchido automaticamente no Postman — será necessário copiar o `access_token` da resposta do login e colar manualmente na variável de ambiente antes de testar os endpoints protegidos.
+
+> Em ambas as ferramentas, lembre de rodar o `/auth/login` primeiro para obter o token, e configurar a variável de ambiente correspondente (ex: `token` ou `access_token`, conforme o nome usado nas requisições da coleção) antes de testar os endpoints protegidos.
 
 ---
 
@@ -229,6 +237,7 @@ GerenciamentoLivros/
 │       ├── repositories/    # acesso ao banco de dados
 │       └── database/        # conexão com o MySQL
 ├── dados/                   # scripts SQL de criação do banco
+├── client_rest/             # coleção de requisições (Bruno, exportada também para Postman) usada para testar os endpoints do backend
 ├── frontend/
 │   └── src/
 │       ├── main.py

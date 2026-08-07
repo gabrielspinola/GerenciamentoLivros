@@ -1,10 +1,11 @@
 import os
+import requests
 from dotenv import load_dotenv 
 from typing import List, Optional
-import requests
 from requests.exceptions import RequestException
-from model.UsuarioModel import UsuarioModel
+
 from services.TokenServices import TokenManager
+from model.UsuarioModel import UsuarioModel
 
 load_dotenv()
 
@@ -163,7 +164,7 @@ class UsuarioServices:
             token_manager = TokenManager(login=self.username, password=self.password)
             token = token_manager.obter_token()
             if token:
-                response = requests.patch(
+                response = requests.put(
                     f"{self.BASE_URL}/usuarios/{usuario.idusuario}",
                     json=usuario.model_dump(mode="json"),
                     headers = {"Authorization": f"Bearer {token}"}

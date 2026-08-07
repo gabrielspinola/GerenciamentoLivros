@@ -1,14 +1,13 @@
 import os
-from conexao import DatabaseConnection
 from flask import request, render_template, flash, redirect, session 
 from werkzeug.security import check_password_hash
+
 from routes.Routes import Routes
 from services.UsuarioServices import UsuarioServices
 
 class PrincRoute(Routes):
     def __init__(self, app):
         self.app = app
-        self.db = DatabaseConnection()
         self.register_routes()
 
     def register_routes(self):
@@ -37,12 +36,10 @@ class PrincRoute(Routes):
                 username = request.form['username']
                 password = request.form['password']
                 
-                self.db.connect()
-                usuario = UsuarioServices(self.db)
+                # self.db.connect()
+                usuario = UsuarioServices(username, password)
                 usu = usuario.consultar_login(username, password)
-                
-                self.db.close()
-                
+                                
                 if usu != None:
                     if username == usu.login and check_password_hash(usu.password, password):
                         if usu.ativo != 'A':

@@ -1,8 +1,7 @@
-from dataclasses import dataclass, asdict
+from pydantic import BaseModel, model_validator
 from typing import Optional
 
-@dataclass
-class LivroModel:
+class LivroModel(BaseModel):
     idlivro: Optional[int] = None
     titulo: str = ""
     autor: str = ""
@@ -10,18 +9,14 @@ class LivroModel:
     genero: str = ""
     bloqueado: str = "N"  # "N" para disponível, "S" para bloqueado
 
-    def to_dict(self) -> dict:
-        # Converte para dicionário
-        return asdict(self)
-
-    @classmethod
-    def from_row(cls, row: tuple) -> 'LivroModel':
-        # Cria instância a partir de uma linha do banco
-        return cls(
-            idlivro=row[0],
-            titulo=row[1],
-            autor=row[2],
-            ano_publicacao=row[3],
-            genero=row[4],
-            bloqueado=row[5]
-        )
+    @model_validator(mode="after")
+    def Valida(self) -> "LivroModel":
+        return self
+    
+class LivroModelVazio():
+    idlivro: int
+    titulo: str
+    autor: str
+    ano_publicacao: str
+    genero: str
+    bloqueado: str     

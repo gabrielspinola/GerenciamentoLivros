@@ -1,11 +1,11 @@
 import os
-from dotenv import load_dotenv
 import requests
-from requests.exceptions import RequestException
+from dotenv import load_dotenv
 from typing import Optional
+from requests.exceptions import RequestException
 
-from model.SettingsModel import SettingsModel
 from services.TokenServices import TokenManager
+from model.SettingsModel import SettingsModel
 
 load_dotenv()
 

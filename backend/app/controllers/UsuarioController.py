@@ -50,7 +50,7 @@ async def criar_usuario_com_email(usuario: Usuario):
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Erro ao criar usuário")
     return UsuarioRepository().buscar_por_id(novo_usuario_id)
 
-@router.patch("/{id}", response_model=Usuario, summary="Atualiza um usuário existente", description="Atualiza os dados de um usuário existente no sistema. Requer autenticação.")
+@router.put("/{id}", response_model=Usuario, summary="Atualiza um usuário existente", description="Atualiza os dados de um usuário existente no sistema. Requer autenticação.")
 async def atualizar_usuario(id: int, usuario: Usuario, usuario_atual: UserInDB = Depends(get_current_user)):
     usuario_existente = UsuarioRepository().buscar_por_id(id)
     if not usuario_existente:

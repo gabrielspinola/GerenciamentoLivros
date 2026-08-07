@@ -1,14 +1,13 @@
-from conexao import DatabaseConnection
-from flask import request, render_template, flash, redirect
+from flask import request, render_template, flash, redirect, session
+
 from routes.Routes import Routes
 from services.LivrosServices import LivroServices
-from model.LivroModel import LivroModel
+from model.LivroModel import LivroModel, LivroModelVazio
 
 class LivroRoute(Routes):
     def __init__(self, app):
         super().__init__()
         self.app = app
-        self.db = DatabaseConnection()
         self.register_routes()
         
     def register_routes(self):
@@ -20,36 +19,31 @@ class LivroRoute(Routes):
                                ano_publicacao = request.form.get("ano_publicacao"), 
                                genero = request.form.get("genero"),
                                bloqueado = request.form.get("bloqueado"))
-            self.db.connect()
-            livro_service = LivroServices(self.db)
+
+            livro_service = LivroServices(username=session.get('username'), password=session.get('usuario_pass'))
             livro_service.create(livro)
-            self.db.close()
+
             flash('Livro criado com sucesso!', 'success')
             return redirect('/livros')
 
         @self.app.route("/livros", methods=["GET"])
         @Routes.login_required
         def listar_livros():
-            self.db.connect()
-            livro = LivroServices(self.db)
+            livro = LivroServices(username=session.get('username'), password=session.get('usuario_pass'))
             livros = livro.listar_all()
-            
-            self.db.close()
             return render_template("pages/ListLivros.html", livros=livros), 200
 
         @self.app.route("/livro", methods=["GET"])
         @Routes.login_required
         def livro():
-            livro_data = LivroModel(idlivro=0, titulo="", autor="", ano_publicacao="", genero="", bloqueado="N")
+            livro_data = LivroModelVazio()
             return render_template("pages/Livro.html", livro=livro_data, acao="novo"), 200
 
         @self.app.route("/livro/<int:id>/editar", methods=["GET"])
         @Routes.login_required
         def atualizar_livro(id):
-            self.db.connect()
-            livro_service = LivroServices(self.db)
+            livro_service = LivroServices(username=session.get('username'), password=session.get('usuario_pass'))
             livro_data = livro_service.consultar_id(id)
-            self.db.close()
             return render_template("pages/Livro.html", livro=livro_data, acao="alterar"), 200
 
         @self.app.route("/livro/<int:id>", methods=["POST", "GET"])
@@ -62,19 +56,15 @@ class LivroRoute(Routes):
                                    genero = request.form.get("genero"),
                                    bloqueado = request.form.get("bloqueado"))
 
-            self.db.connect()
-            livro_service = LivroServices(self.db)
+            livro_service = LivroServices(username=session.get('username'), password=session.get('usuario_pass'))
             livro_service.atualizar(altLivro)
-            self.db.close()
             flash('Livro atualizado com sucesso!', 'success')
             return redirect('/livros')
         
         @self.app.route("/livro/<int:id>/deletar", methods=["GET", "DELETE"])
         @Routes.login_required
         def deletar_livro(id):
-            self.db.connect()
-            livro_service = LivroServices(self.db)
+            livro_service = LivroServices(username=session.get('username'), password=session.get('usuario_pass'))
             livro_service.deletar(id)
-            self.db.close()
             flash('Livro deletado com sucesso!', 'success')
             return redirect('/livros')

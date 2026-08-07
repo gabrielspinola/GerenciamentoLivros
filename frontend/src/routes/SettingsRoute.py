@@ -1,4 +1,4 @@
-from flask import request, render_template, flash, redirect, session
+from flask import request, render_template, flash, session
 from routes.Routes import Routes
 from services.SettingsServices import SettingsServices
 from model.SettingsModel import SettingsModel

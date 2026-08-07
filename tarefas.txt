@@ -50,7 +50,7 @@
 - Ajustar menu dropdown - OK
 - Melhorar a mensagens do flash_messages - OK
 
-- Separar o front do back end deixando 2 aplicações no projeto.
+
 - Pesquisar sobre blueprint Flask - É como um módulo de rotas dentro do Flask - OK
 
 - Implementar autenticação JWT nas requisições - OK
@@ -61,40 +61,41 @@
     - Melhorar tela principal. Ela está crua
     - Colocar calendário para mostrar quando os livros serão devolvidos
 
-- Dividir backend de frontend.  
+- Separar o front do back end deixando 2 aplicações no projeto. - ok
+- Dividir backend de frontend.  - ok
     - Criar Backend - ok
         - Token - ok
         - Livros - ok
         - Usuários - ok
-        - Envio de e-mail usuário novo - 
-        - AlugarLivros
-        - Settings
+        - Envio de e-mail usuário novo - ok
+        - AlugarLivros - ok
+        - Settings - ok
 
-    - Ajustar frontend para realizar os requests no backend
-        - Retirar a decriptação(token) do frontend  
+    - Ajustar frontend para realizar os requests no backend - ok
+        - Retirar a decriptação(token) do frontend - ok
         - Ajustar login
             - Login do sistema - ok
             - Criar novo usuário - ok
             - Envio de e-mail pelo backend - ok
-        - Ajustar tela de livros
-            - Cadastro 
-            - Listagem
+        - Ajustar tela de livros - ok
+            - Cadastro - ok
+            - Listagem - ok
         -Ajustar tela de usuários
-            - Cadastro 
-            - Listagem
+            - Cadastro - ok
+            - Listagem - ok
         - Ajustar tela de aluguel de livros
-            - Cadastro 
-            - Listagem
+            - Cadastro - ok
+            - Listagem - ok
         - Ajustar tela de Settings
-            - Cadastro
-            - Listagem
-        - Criar chache para reaproveitamento do token
+            - Cadastro - ok
+            - Listagem - ok
+        - Criar chache para reaproveitamento do token - ok
 
     - Ajustar classes model no frontend para utilizar Pydantic
-        - Usuario -
-        - Livro
-        - Aluguel Livro
-        - Settings
+        - Usuario - ok
+        - Livro - ok
+        - Aluguel Livro - ok
+        - Settings - ok
 
 - Ajustar usuario. Funcionalidade para desativar o usuário
 
