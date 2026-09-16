@@ -60,6 +60,13 @@ class LivroRepository:
             with conn.cursor() as cursor:
                 sql = "UPDATE livros SET bloqueado='N' WHERE idlivro=%s"
                 affected = cursor.execute(sql, (idlivro,))
-                return affected > 0   
+                return affected > 0
+    
+    def busca_ultimos_livros(self) -> List[Livro]:
+        with get_db_connection() as conn:
+            with conn.cursor() as cursor:
+                cursor.execute("SELECT * FROM livros ORDER BY createAt DESC LIMIT 5")
+                rows = cursor.fetchall()
+                return [Livro(**row) for row in rows]
             
 livro_repo = LivroRepository()

@@ -16,6 +16,10 @@ async def listar_livros(usuario_atual: UserInDB = Depends(get_current_user)):
 async def listar_livros_disponiveis(usuario_atual: UserInDB = Depends(get_current_user)):
     return LivroRepository().buscar_livros_disponiveis()
 
+@router.get("/ultimos", response_model=List[Livro], summary="Lista os últimos livros cadastrados", description="Retorna uma lista com os últimos livros cadastrados no sistema. Requer autenticação.")
+async def listar_ultimos_livros(usuario_atual: UserInDB = Depends(get_current_user)):
+    return LivroRepository().busca_ultimos_livros()
+
 @router.get("/{id}", response_model=Livro, summary="Busca livro por ID", description="Retorna os dados de um livro específico pelo seu ID. Requer autenticação.")
 async def consultar_livro(id: int, usuario_atual: UserInDB = Depends(get_current_user)):
     livro = LivroRepository().buscar_por_id(id)

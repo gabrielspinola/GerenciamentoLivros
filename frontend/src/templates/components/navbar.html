@@ -1,18 +1,20 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
     <div class="container">
-        <a class="navbar-brand" href="/">
-            <i class="fas fa-home me-2"></i>Gerenciamento de Livros
+        <a class="navbar-brand d-flex align-items-center" href="/">
+            <i class="fas fa-book fa-lg me-2" aria-hidden="true"></i>
+            <span>Gerenciamento de Livros</span>
         </a>
-        
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        
+
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav me-auto">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
                     <a class="nav-link {% if request.endpoint == 'home' %}active{% endif %}" href="/">Home</a>
                 </li>
+
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarCadastro" role="button" data-bs-toggle="dropdown" aria-expanded="false">Cadastros</a>
                     <ul class="dropdown-menu" aria-labelledby="navbarCadastro">
@@ -22,36 +24,24 @@
                         <li><a class="dropdown-item {% if request.endpoint == 'listar_settings' %}active{% endif %}" href="/settings">Configurações</a></li>
                     </ul>
                 </li>
-               <li class="nav-item dropdown">
+
+                <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarLivros" role="button" data-bs-toggle="dropdown" aria-expanded="false">Livros</a>
                     <ul class="dropdown-menu" aria-labelledby="navbarLivros">
                         <li><a class="dropdown-item {% if request.endpoint == 'listar_livrosAlugados' %}active{% endif %}" href="/livrosAlugados">Alugar</a></li>
                     </ul>
-               </li>                
+                </li>
+
                 <li class="nav-item">
                     <a class="nav-link {% if request.endpoint == 'about' %}active{% endif %}" href="/about">Sobre</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/logout">Sair</a>
-                </li>
-                <!--
-                <li class="nav-item">
-                    <a class="nav-link { % if request.endpoint == 'contact' % }active{ % endif % }" 
-                       href="{ { url_for('contact') } }">
-                        Contato
-                    </a>
-                </li>
-                -->
             </ul>
-            
-            <!-- Componente de usuário - #AJUSTAR
-            { % if user % }
-                { % include 'components/user_menu.html' % }
-            { % else % }
+
+            <div class="d-flex align-items-center gap-2">
                 <div class="navbar-nav">
-                    <a class="nav-link" href="/login">Login</a>
+                    <a class="nav-link" href="/logout">Sair</a>
                 </div>
-            { % endif % }-->
+            </div>
         </div>
     </div>
 </nav>

@@ -2,14 +2,72 @@
 
 {% block title %}Home - Gerenciamento de Livros{% endblock %}
 
-{% block content %}
-<div class="row">
-      <div class="col-md-12">
-          <h1>teste pagina home!</h1>
-      </div>
-</div>
-{% endblock %}
-
 {% block head %}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+{% endblock %}
+
+{% block content %}
+<div class="hero p-5 mb-4 rounded-3 text-white">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <h1 class="display-5">Bem-vindo ao Gerenciamento de Livros</h1>
+                <p class="lead">Organize, empreste e acompanhe seus livros com facilidade.</p>
+                <p>
+                    <a href="/livros" class="btn btn-primary btn-lg me-2"><i class="fas fa-book me-2"></i>Ver livros</a>
+                    <a href="/livrosAlugados" class="btn btn-outline-light btn-lg"><i class="fas fa-book-reader me-2"></i>Alugar</a>
+                </p>
+            </div>
+            <div class="col-md-4 text-center">
+                <img src="{{ url_for('static', filename='illustration-books.svg') }}" alt="Livros" class="img-fluid" style="max-height:160px;">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row g-3 mb-4">
+        <div class="col-sm-10 col-md-4">
+            <div class="stat-card p-3 rounded shadow-sm text-center">
+                <h5>Livros</h5>
+                <strong>{{ total_livros or '—' }}</strong>
+            </div>
+        </div>
+        <div class="col-sm-10 col-md-4">
+            <div class="stat-card p-3 rounded shadow-sm text-center">
+                <h5>Usuários</h5>
+                <strong>{{ total_usuarios or '—' }}</strong>
+            </div>
+        </div>
+        <div class="col-sm-10 col-md-4">
+            <div class="stat-card p-3 rounded shadow-sm text-center">
+                <h5>Alugados</h5>
+                <strong>{{ total_alugados or '—' }}</strong>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Últimos livros cadastrados</h5>
+                    <div class="list-group list-group-flush">
+                        {% for livro in ultimos_livros %}
+                        <a href="/livros/{{ livro.id }}" class="list-group-item list-group-item-action">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h6 class="mb-1">{{ livro.titulo }}</h6>
+                                <small class="text-muted">{{ livro.ano }}</small>
+                            </div>
+                            <p class="mb-1 text-truncate">{{ livro.autor }}</p>
+                        </a>
+                        {% else %}
+                        <div class="text-muted">Nenhum livro cadastrado recentemente.</div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

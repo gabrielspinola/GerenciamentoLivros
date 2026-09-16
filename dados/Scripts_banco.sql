@@ -4,18 +4,20 @@ USE `bd_sgl` ;
 -- -----------------------------------------------------
 -- Table `bd_sgl`.`livros`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `bd_sgl`.`livros` (
-  `idlivro` INT NOT NULL AUTO_INCREMENT COMMENT 'Identificando da tabela de livros',
-  `titulo` VARCHAR(255) NOT NULL COMMENT 'Título do livro cadastrado',
-  `autor` VARCHAR(255) NOT NULL COMMENT 'Auto do livro',
-  `ano_publicacao` INT NULL DEFAULT NULL COMMENT 'Ano da publicação do livro',
-  `genero` VARCHAR(100) NULL DEFAULT NULL COMMENT 'Gênero do livro',
-  `bloqueado` CHAR(1) NOT NULL DEFAULT 'N' COMMENT 'Campo que informa se o livro está bloqueado devido ao aluguel. S-Bloqueado / N-Desbloqueado',
-  PRIMARY KEY (`idlivro`))
-ENGINE = InnoDB
-AUTO_INCREMENT = 4
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
+CREATE TABLE `livros` (
+  `idlivro` int NOT NULL AUTO_INCREMENT COMMENT 'Identificando da tabela de livros',
+  `titulo` varchar(255) NOT NULL COMMENT 'Título do livro cadastrado',
+  `autor` varchar(255) NOT NULL COMMENT 'Auto do livro',
+  `ano_publicacao` int DEFAULT NULL COMMENT 'Ano da publicação do livro',
+  `genero` varchar(100) DEFAULT NULL COMMENT 'Gênero do livro',
+  `bloqueado` varchar(1) DEFAULT NULL COMMENT 'Campo que informa se o livro está bloqueado devido ao aluguel. S-Bloqueado / N-Desbloqueado',
+  `createAt` datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'Criação do livro no sistema.',
+  PRIMARY KEY (`idlivro`)
+) 
+ENGINE=InnoDB 
+AUTO_INCREMENT=9 
+DEFAULT CHARSET=utf8mb4 
+COLLATE=utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
@@ -68,10 +70,14 @@ COLLATE = utf8mb4_0900_ai_ci;
 -- -----------------------------------------------------
 -- Table `bd_sgl`.`settings`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `bd_sgl`.`settings` (
-  `idsettings` INT NOT NULL AUTO_INCREMENT COMMENT 'Identificador da tabela de settings',
-  `diasLivroEmprestado` INT NULL COMMENT 'Quantidade de dias que um livro poderá permanecer emprestado',
-  `createdAt` DATE NULL DEFAULT curdate() COMMENT 'Data de criação do registro',
-  `updatedAt` DATE NULL COMMENT 'Data de atualização do registro',
-  PRIMARY KEY (`idsettings`))
-ENGINE = InnoDB;
+CREATE TABLE `settings` (
+  `idsettings` int NOT NULL AUTO_INCREMENT COMMENT 'Identificador da tabela de settings',
+  `diasLivroEmprestado` int DEFAULT NULL COMMENT 'Quantidade de dias que um livro poderá permanecer emprestado',
+  `createdAt` datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'Data de criação do registro',
+  `updatedAt` date DEFAULT NULL COMMENT 'Data de atualização do registro',
+  PRIMARY KEY (`idsettings`)
+) 
+ENGINE=InnoDB 
+AUTO_INCREMENT=3 
+DEFAULT CHARSET=utf8mb4 
+COLLATE=utf8mb4_0900_ai_ci;

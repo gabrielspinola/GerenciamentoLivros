@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="480" height="240" viewBox="0 0 480 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Ilustração de pilha de livros</title>
+  <desc id="desc">Ilustração simples de três livros empilhados com cores suaves</desc>
+  <defs>
+    <linearGradient id="g1" x1="0" x2="1">
+      <stop offset="0%" stop-color="#4f46e5" />
+      <stop offset="100%" stop-color="#06b6d4" />
+    </linearGradient>
+    <linearGradient id="g2" x1="0" x2="1">
+      <stop offset="0%" stop-color="#2563eb" />
+      <stop offset="100%" stop-color="#8b5cf6" />
+    </linearGradient>
+  </defs>
+
+  <!-- Fundo sutil -->
+  <rect width="100%" height="100%" rx="12" fill="#f8fafc" />
+
+  <!-- Livro inferior -->
+  <g transform="translate(40,110)">
+    <rect x="0" y="40" width="360" height="20" rx="6" fill="#eff6ff" stroke="#c7d2fe" />
+    <rect x="0" y="0" width="360" height="40" rx="6" fill="url(#g2)" />
+    <rect x="12" y="8" width="120" height="24" rx="3" fill="#ffffff" opacity="0.12"/>
+  </g>
+
+  <!-- Livro do meio -->
+  <g transform="translate(60,70)">
+    <rect x="0" y="40" width="320" height="20" rx="6" fill="#f0fdf4" stroke="#bbf7d0" />
+    <rect x="0" y="0" width="320" height="40" rx="6" fill="url(#g1)" />
+    <rect x="12" y="8" width="90" height="24" rx="3" fill="#ffffff" opacity="0.12"/>
+  </g>
+
+  <!-- Livro superior -->
+  <g transform="translate(100,30)">
+    <rect x="0" y="40" width="240" height="20" rx="6" fill="#fff7ed" stroke="#ffedd5" />
+    <rect x="0" y="0" width="240" height="40" rx="6" fill="#ffb454" />
+    <rect x="12" y="8" width="70" height="24" rx="3" fill="#ffffff" opacity="0.14"/>
+  </g>
+
+  <!-- Pequenos detalhes -->
+  <g transform="translate(360,28)">
+    <circle cx="0" cy="0" r="10" fill="#06b6d4" opacity="0.9" />
+    <circle cx="28" cy="6" r="6" fill="#4f46e5" opacity="0.85" />
+  </g>
+
+</svg>

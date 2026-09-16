@@ -15,3 +15,68 @@
     text-align: center !important;
     margin-top: auto !important; /* Empurra o rodapé para o final da página */
 }
+
+/* Hero / banner principal */
+.hero {
+    background: linear-gradient(135deg, var(--hero-start), var(--hero-end));
+}
+.hero .display-5 { font-weight: 600; }
+
+/* Paleta de cores do site (variáveis) */
+:root {
+    --primary: #0d6efd; /* Azul principal (Bootstrap compatível) */
+    --accent: #06b6d4;  /* Ciano para acentos */
+    --hero-start: #2563eb; /* azul escuro */
+    --hero-end: #7c3aed;   /* roxo */
+    --muted: #6c757d;
+    --footer-bg: #0b1220;
+}
+.hero .display-5 { font-weight: 600; }
+
+.stat-card {
+    background: #ffffff;
+    color: #212529;
+}
+.stat-card h5 { margin-bottom: 0.25rem; font-size: 0.95rem; }
+.stat-card strong { font-size: 1.4rem; display: block; margin-top: 0.35rem; }
+
+/* Ajustes gerais */
+.text-truncate { max-width: 100%; }
+
+.class-footer { padding: 0.6rem 0; background: var(--footer-bg); }
+/* Footer compact */
+.class-footer small, .class-footer .small { font-size: 0.78rem; }
+.class-footer hr { margin: 0.5rem 0; border-color: rgba(255,255,255,0.06); }
+
+/* Pequenos ajustes responsivos */
+@media (max-width: 576px) {
+    .hero { padding: 2rem 1rem; }
+    .hero .lead { font-size: 0.95rem; }
+}
+
+/* Navbar tweaks */
+.navbar-brand { font-weight: 600; letter-spacing: 0.2px; }
+.nav-link.active { font-weight: 600; }
+
+/* Footer links and social icons */
+.class-footer a.text-light { opacity: 0.95; }
+.class-footer a.text-light:hover { color: #f8f9fa; text-decoration: none; opacity: 1; }
+.social-link { font-size: 1.05rem; }
+.social-link:hover { color: var(--accent); }
+
+/* Botões primários */
+.btn-primary {
+    background-color: var(--primary);
+    border-color: var(--primary);
+}
+.btn-primary:hover, .btn-primary:focus {
+    background-color: #0b5ed7;
+    border-color: #0a58ca;
+}
+.btn-outline-primary {
+    color: var(--primary);
+    border-color: var(--primary);
+}
+.btn-outline-primary:hover {
+    background-color: rgba(13,110,253,0.08);
+}

@@ -305,6 +305,40 @@
           }
         },
         {
+          "name": "Get Livros",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "description": "",
+                "disabled": false,
+                "type": "default"
+              }
+            ],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "http://127.0.0.1:8000/livros",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1:8000"
+              ],
+              "path": [
+                "livros"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
           "name": "Get Livros Disponíveis",
           "request": {
             "method": "GET",
@@ -340,40 +374,6 @@
           }
         },
         {
-          "name": "Get Livros",
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{token}}",
-                "description": "",
-                "disabled": false,
-                "type": "default"
-              }
-            ],
-            "auth": {
-              "type": "noauth"
-            },
-            "description": "",
-            "url": {
-              "raw": "http://127.0.0.1:8000/livros",
-              "protocol": "http",
-              "host": [
-                "127",
-                "0",
-                "0",
-                "1:8000"
-              ],
-              "path": [
-                "livros"
-              ],
-              "query": [],
-              "variable": []
-            }
-          }
-        },
-        {
           "name": "Get Livro por id",
           "request": {
             "method": "GET",
@@ -402,6 +402,40 @@
               "path": [
                 "livros",
                 "4"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "Get Últimos Livros",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "description": "",
+                "disabled": false,
+                "type": "default"
+              }
+            ],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "http://127.0.0.1:8000/livros",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1:8000"
+              ],
+              "path": [
+                "livros"
               ],
               "query": [],
               "variable": []

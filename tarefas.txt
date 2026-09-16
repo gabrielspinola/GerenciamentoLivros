@@ -32,9 +32,6 @@
     - Editar um livro alugado (Renova a data do livro alugado) -  OK
     - Excluir o aluguel - OK
 
-- Criar funcionalidade para realizar a devolução do livro
-    - Devolver um livro Alugado 
-
 - Criar tela de configuração - OK
     - Criar tabela no banco - OK
     - Criar model - OK
@@ -45,21 +42,13 @@
 - Criar botão "Criar conta" - ok
   - Confirmação de e-mail - ok
   - Link para ativar a conta - ok
-  - Colocar campo para confirmar a senha e verificar se as senhas digitadas são identicas.
 
 - Ajustar menu dropdown - OK
 - Melhorar a mensagens do flash_messages - OK
 
-
 - Pesquisar sobre blueprint Flask - É como um módulo de rotas dentro do Flask - OK
 
 - Implementar autenticação JWT nas requisições - OK
-
-- Criar tipos de acesso para os usuários (permissões)
-
-- Criar tela principal do sistema
-    - Melhorar tela principal. Ela está crua
-    - Colocar calendário para mostrar quando os livros serão devolvidos
 
 - Separar o front do back end deixando 2 aplicações no projeto. - ok
 - Dividir backend de frontend.  - ok
@@ -91,16 +80,46 @@
             - Listagem - ok
         - Criar chache para reaproveitamento do token - ok
 
-    - Ajustar classes model no frontend para utilizar Pydantic
+    - Ajustar classes model no frontend para utilizar Pydantic - ok
         - Usuario - ok
         - Livro - ok
         - Aluguel Livro - ok
         - Settings - ok
 
-- Ajustar usuario. Funcionalidade para desativar o usuário
+- Ajuste do README para poder colocar o passo a passo para rodar a aplicação. - ok
 
-- Melhorar log 
+- Melhorar log - Ok
+  - Adicionado RequestId no logs para melhor localizar o erro quando ocorrer - ok
+
+
+--------------------------------------------------------------------------------------
+
+ ======= TAREFAS PENDENTES ======= 
+
+- Cada livro possuir um QrCode.
+    - Criar tela para ler o QrCode e abrir o histórico do livro
+    - Caso o livro esteja alugado abrir opção para pode devolver o livro. Caso o livro não esteja alugado abrir opção para poder alugar.
+    - Cirar tela para poder gerar o QrCode
+
+- Tela de criar usuário
+    - Colocar campo para confirmar a senha e verificar se as senhas digitadas são identicas.
+
+- Criar funcionalidade para realizar a devolução do livro
+    - Devolver um livro Alugado 
+
+- Criar tela principal do sistema
+    - Melhorar tela principal. Ela está crua - OK
+    - Colocar calendário para mostrar quando os livros serão devolvidos
+
+- Criar tipos de acesso para os usuários (permissões)
+
+- Ajustar usuario. Funcionalidade para desativar o usuário
 
 - Ajustar cadastro de livros para adicionar uma imagem do livro
 
-- Ajuste do README para poder colocar o passo a passo para rodar a aplicação. 
+- Colocar SQLAlchemy na aplicação. 
+
+- Criar script para para o docker.
+    - Automatizar a criação do banco de dados no docker 
+    - Adicionar o comando e caso o cliente queira rodar o docker
+
